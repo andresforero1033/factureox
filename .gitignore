@@ -1,0 +1,31 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.egg-info/
+
+# Entornos virtuales
+.venv/
+venv/
+ENV/
+
+# Config y secretos
+*.env
+.env
+.env.local
+.env.*
+
+# VS Code / OS
+.vscode/
+.DS_Store
+Thumbs.db
+
+# Node/Frontend (si agregas luego)
+node_modules/
+dist/
+
+# Cache y otros
+*.log
+.cache/
+coverage/

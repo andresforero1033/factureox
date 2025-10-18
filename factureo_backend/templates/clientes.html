@@ -1,0 +1,84 @@
+{% extends 'base.html' %}
+{% block title %}Clientes - Factureo{% endblock %}
+{% block content %}
+<h3>Clientes</h3>
+
+<!-- Botón para modal -->
+<button class="btn btn-success mb-3" data-bs-toggle="modal" data-bs-target="#clienteModal"><i
+        class="bi bi-person-plus"></i> Agregar cliente</button>
+
+<table class="table table-striped align-middle">
+    <thead>
+        <tr>
+            <th>Nombre</th>
+            <th>Correo</th>
+            <th>Teléfono</th>
+            <th>Dirección</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for c in clientes %}
+        <tr>
+            <form method="POST" action="{{ url_for('clientes.edit_client', id=c._id) }}" class="row g-2">
+                <td><input class="form-control" name="nombre" value="{{ c.nombre }}" placeholder="Nombre" title="Nombre"
+                        required></td>
+                <td><input class="form-control" name="correo" value="{{ c.correo }}" placeholder="Correo" title="Correo"
+                        required></td>
+                <td><input class="form-control" name="telefono" value="{{ c.telefono }}" placeholder="Teléfono"
+                        title="Teléfono"></td>
+                <td><input class="form-control" name="direccion" value="{{ c.direccion }}" placeholder="Dirección"
+                        title="Dirección"></td>
+                <td class="text-nowrap">
+                    <button type="submit" class="btn btn-primary btn-sm" title="Guardar cambios"><i
+                            class="bi bi-save"></i> Guardar</button>
+                </td>
+            </form>
+            <td class="text-nowrap">
+                <form method="POST" action="{{ url_for('clientes.delete_client', id=c._id) }}">
+                    <button type="submit" class="btn btn-outline-danger btn-sm" title="Eliminar cliente"><i
+                            class="bi bi-trash"></i> Eliminar</button>
+                </form>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<!-- Modal Agregar/Editar Cliente -->
+<div class="modal fade" id="clienteModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Agregar cliente</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form method="POST" action="{{ url_for('clientes.create_client') }}">
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label class="form-label">Nombre</label>
+                        <input class="form-control" name="nombre" placeholder="Nombre" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Correo</label>
+                        <input type="email" class="form-control" name="correo" placeholder="correo@ejemplo.com"
+                            required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Teléfono</label>
+                        <input class="form-control" name="telefono" placeholder="Teléfono">
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Dirección</label>
+                        <input class="form-control" name="direccion" placeholder="Dirección">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="submit" class="btn btn-success"><i class="bi bi-check2"></i> Guardar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+{% block title %}Inicio - Factureo{% endblock %}
+{% block content %}
+<section class="py-5 text-center">
+    <h1 class="display-5 font-title">Bienvenido a Factureo</h1>
+    <p class="lead font-paragraph">Gestión sencilla de Inventario, Clientes y Ventas.</p>
+    <a class="btn btn-primary btn-lg" href="{{ url_for('auth.login') }}"><i class="bi bi-box-arrow-in-right"></i>
+        Iniciar sesión</a>
+</section>
+
+<section id="about" class="my-5">
+    <h2 class="font-subtitle">About Us</h2>
+    <p>Factureo es una aplicación web diseñada para pequeñas y medianas empresas que desean gestionar su inventario,
+        clientes y ventas de manera eficiente y centralizada.</p>
+</section>
+
+<section id="features" class="row g-4">
+    <div class="col-md-4">
+        <div class="card h-100">
+            <div class="card-body">
+                <h5 class="card-title"><i class="bi bi-box-seam"></i> Inventario</h5>
+                <p class="card-text">Administra productos, existencias y categorías.</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card h-100">
+            <div class="card-body">
+                <h5 class="card-title"><i class="bi bi-people"></i> Clientes</h5>
+                <p class="card-text">Registra y mantiene actualizada la información de tus clientes.</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card h-100">
+            <div class="card-body">
+                <h5 class="card-title"><i class="bi bi-currency-dollar"></i> Ventas</h5>
+                <p class="card-text">Registra ventas y consulta el historial reciente.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section id="contact" class="my-5">
+    <h2 class="font-subtitle">Contacto</h2>
+    <p>Para soporte, contáctanos en soporte@factureo.local</p>
+</section>
+{% endblock %}

@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+{% block title %}Ventas - Factureo{% endblock %}
+{% block content %}
+<h3>Ventas</h3>
+<form class="row g-2 mb-3" method="POST" action="{{ url_for('ventas.create_sale') }}">
+    <div class="col-md-4">
+        <select class="form-select" name="cliente_id" required title="Cliente">
+            <option value="">Seleccione cliente</option>
+            {% for c in clientes %}
+            <option value="{{ c._id }}">{{ c.nombre }}</option>
+            {% endfor %}
+        </select>
+    </div>
+    <div class="col-md-6">
+        <select class="form-select" name="productos_ids" multiple size="4" required title="Productos">
+            {% for p in productos %}
+            <option value="{{ p._id }}">{{ p.nombre }} - {{ p.precio }}</option>
+            {% endfor %}
+        </select>
+    </div>
+    <div class="col-md-2 d-grid">
+        <button type="submit" class="btn btn-success"><i class="bi bi-cart-check"></i> Registrar</button>
+    </div>
+</form>
+
+<h5>Ventas recientes</h5>
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Fecha</th>
+            <th>Cliente</th>
+            <th>Total</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for v in ventas %}
+        <tr>
+            <td>{{ v.fecha }}</td>
+            <td>{{ v.cliente_id }}</td>
+            <td>{{ v.total }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

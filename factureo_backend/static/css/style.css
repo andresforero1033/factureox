@@ -1,0 +1,26 @@
+:root {
+  --color-1: #E7EBFD;
+  --color-2: #BDC8FA;
+  --color-3: #92A5F6;
+  --color-4: #6881F3;
+  --color-5: #3E5EEF;
+  --color-6: #133BEC;
+  --color-7: #1030C1;
+  --color-8: #0C2697;
+  --color-9: #091B6D;
+  --color-10: #051042;
+  --color-11: #020618;
+}
+
+body { background-color: var(--color-1); }
+.navbar { background: linear-gradient(90deg, var(--color-5), var(--color-7)); }
+h1, .display-5 { font-family: 'Montserrat Alternates', sans-serif; }
+h2, h3, h4 { font-family: 'Playwrite DE Grund', cursive; }
+p, .lead { font-family: 'Poiret One', cursive; }
+
+.font-title { font-family: 'Montserrat Alternates', sans-serif; }
+.font-paragraph { font-family: 'Poiret One', cursive; }
+.font-subtitle { font-family: 'Playwrite DE Grund', cursive; }
+
+.card { border-radius: 12px; }
+footer { font-size: 0.9rem; }
