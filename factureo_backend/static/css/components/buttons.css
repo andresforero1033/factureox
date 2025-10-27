@@ -5,3 +5,26 @@
         padding: 0.65rem 1.1rem;
     }
 }
+
+/* Estados de foco accesibles y hover sutil con acento unificado */
+.btn:focus-visible {
+    box-shadow: var(--focus-ring) !important;
+}
+
+.btn-outline-primary:hover,
+.btn-outline-primary:focus-visible {
+    background: rgba(var(--accent-rgb), .10) !important;
+    border-color: var(--accent-primary) !important;
+    color: var(--color-1) !important;
+}
+
+.btn-primary {
+    background-image: none;
+    background-color: var(--accent-primary);
+    border-color: var(--accent-primary);
+}
+.btn-primary:hover,
+.btn-primary:focus-visible {
+    background-color: var(--accent-strong);
+    border-color: var(--accent-strong);
+}

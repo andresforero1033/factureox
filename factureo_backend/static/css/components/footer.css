@@ -5,5 +5,6 @@ footer {
     color: var(--color-2);
     border-top: 1px solid var(--color-9);
 }
-footer a { color: var(--color-2); }
+footer a { color: var(--color-2); text-decoration: none; }
 footer a:hover { color: var(--color-1); }
+footer a:focus-visible { outline: none; box-shadow: var(--focus-ring); border-radius: var(--radius-sm); }
