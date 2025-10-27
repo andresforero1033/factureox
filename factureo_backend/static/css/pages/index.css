@@ -1,4 +1,130 @@
 /* Página: index (landing) */
+/* Navbar overlay en index: el main no agrega padding superior para que el hero toque el borde superior */
+.page-index .navbar-overlay + main {
+    padding-top: 0 !important;
+}
+
+/* En la landing queremos secciones a ancho completo (edge-to-edge) */
+.page-index main.container-fluid {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+}
+
+/* --------- Sección: Nosotros --------- */
+#nosotros {
+    /* Fondo sutil con degradado radial para separar del resto */
+    background:
+        radial-gradient(1200px 400px at 10% 0%, rgba(255,255,255,0.04), transparent 60%),
+        radial-gradient(1200px 400px at 90% 100%, rgba(104,129,243,0.07), transparent 60%);
+}
+
+#nosotros .section-title {
+    position: relative;
+    display: inline-block;
+    padding-bottom: .25rem;
+}
+#nosotros .section-title::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: -4px;
+    height: 3px;
+    border-radius: 3px;
+    background: linear-gradient(90deg, var(--accent-strong), var(--accent-primary), var(--accent-weak));
+    opacity: .9;
+}
+
+/* Lista con iconos */
+#nosotros .feature-list {
+    list-style: none;
+    padding-left: 0;
+}
+#nosotros .feature-list li {
+    display: flex;
+    align-items: flex-start;
+    gap: .5rem;
+    margin: .4rem 0;
+}
+#nosotros .feature-list i {
+    color: var(--accent-primary);
+    margin-top: .2rem;
+}
+
+/* Tarjetas de stats con leve acento */
+#nosotros .stat-card {
+    border: 1px solid rgba(255,255,255,.08);
+    background-color: rgba(0,0,0,.15);
+}
+#nosotros .stat-card .h3 {
+    color: var(--color-2);
+}
+
+@media (min-width: 992px) {
+    #nosotros .feature-list li { margin: .5rem 0; }
+}
+
+/* Tema claro: colores específicos solicitados para el héroe de inicio */
+[data-theme="light"] .hero-full .display-5,
+[data-theme="light"] .hero-full .lead {
+    color: #FFFFFF;
+}
+
+/* --------- Trusted By (Nosotros) --------- */
+#nosotros .trusted-by { margin-top: 2rem; opacity: .95; }
+#nosotros .trusted-by .trusted-title {
+    letter-spacing: .14em;
+    font-size: .8rem;
+    color: var(--color-2);
+    opacity: .65;
+    margin-bottom: .5rem;
+}
+#nosotros .trusted-by .brands {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem 1.5rem;
+}
+#nosotros .trusted-by .brand {
+    color: var(--color-2);
+    opacity: .8;
+    filter: grayscale(35%);
+    transition: opacity .2s ease, filter .2s ease, transform .2s ease;
+    line-height: 1;
+}
+#nosotros .trusted-by .brand:hover {
+    opacity: 1;
+    filter: grayscale(0%);
+    transform: translateY(-1px);
+}
+
+/* Tipografías por marca (logotipos tipográficos) */
+#nosotros .brand-kubo {
+    font-family: 'Bebas Neue', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+    letter-spacing: .04em;
+    font-size: clamp(1.25rem, 1rem + 1.2vw, 1.8rem);
+}
+#nosotros .brand-evelix {
+    font-family: 'Lora', Georgia, 'Times New Roman', serif;
+    font-weight: 700;
+    font-size: clamp(1.1rem, .95rem + 1.1vw, 1.7rem);
+}
+#nosotros .brand-factureox {
+    font-family: 'Oswald', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+    font-weight: 500;
+    letter-spacing: .06em;
+    font-size: clamp(1.2rem, 1rem + 1.1vw, 1.75rem);
+}
+#nosotros .brand-consesars {
+    font-family: 'Playfair Display', Georgia, 'Times New Roman', serif;
+    font-weight: 700;
+    font-size: clamp(1.15rem, .95rem + 1.15vw, 1.75rem);
+}
+#nosotros .brand-masons {
+    font-family: 'Poppins', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+    font-weight: 600;
+    letter-spacing: .02em;
+    font-size: clamp(1.1rem, .95rem + 1.1vw, 1.7rem);
+}
 
 /* Alineación solo para tarjetas en la sección Servicios */
 #servicios .col-md-6.col-lg-3 {
@@ -41,7 +167,7 @@
     border-color: transparent !important;
     /* sin borde visible */
     position: relative;
-    border-radius: 0.5rem;
+    border-radius: var(--radius-md);
     z-index: 0;
 }
 
@@ -53,7 +179,7 @@
 }
 
 #servicios .card-footer .btn-more:focus {
-    box-shadow: 0 0 0 0.15rem rgba(255, 255, 255, 0.08) !important;
+    box-shadow: var(--focus-ring) !important;
 }
 
 /* Borde animado tipo "culebrita" (marching ants) */
@@ -67,7 +193,7 @@
     transition: opacity 0.2s ease;
     --t: 2px;
     --d: 16px;
-    --c: var(--color-4);
+    --c: var(--accent-primary);
     background: linear-gradient(90deg, var(--c) 50%, #0000 0) top/var(--d) var(--t) repeat-x,
         linear-gradient(90deg, var(--c) 50%, #0000 0) bottom/var(--d) var(--t) repeat-x,
         linear-gradient(0deg, var(--c) 50%, #0000 0) left/var(--t) var(--d) repeat-y,

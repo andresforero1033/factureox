@@ -20,6 +20,19 @@ body {
     font-weight: 100;
 }
 
+/* Desplazamiento suave para anclas; respetar reduce motion */
+html { scroll-behavior: smooth; }
+@media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+}
+
+/* Transición suave al alternar tema (aplicado temporalmente por JS) */
+.theme-transition, .theme-transition * {
+    transition-property: background-color, color, border-color, fill, stroke;
+    transition-duration: 160ms;
+    transition-timing-function: ease;
+}
+
 .navbar {
     background: linear-gradient(90deg, var(--color-11), var(--color-10));
 }
@@ -44,7 +57,7 @@ body {
     bottom: -4px;
     height: 2px;
     width: 100%;
-    background: linear-gradient(90deg, var(--color-6), var(--color-4));
+    background: var(--accent-gradient);
     transform: scaleX(0);
     transform-origin: left;
     transition: transform 0.25s ease;
@@ -104,7 +117,7 @@ a:hover,
 
 /* Tarjetas en modo oscuro */
 .card {
-    border-radius: 12px;
+    border-radius: var(--radius-card);
     background-color: var(--color-11);
     color: var(--color-1);
     border: 1px solid var(--color-9);
@@ -117,7 +130,7 @@ a:hover,
 
 .hover-card:hover {
     transform: translateY(-2px) scale(1.01);
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+    box-shadow: var(--shadow-3);
 }
 
 /* Tarjeta de producto/servicio */
@@ -127,7 +140,7 @@ a:hover,
 
 .product-card:hover {
     transform: translateY(-2px);
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+    box-shadow: var(--shadow-3);
 }
 
 .product-card .price {
@@ -166,7 +179,7 @@ footer a:hover {
     /* centra horizontalmente */
     justify-content: center;
     /* centra verticalmente */
-    gap: 0.75rem;
+    gap: var(--gap-3);
     /* separa h1, p y botón sin alterar márgenes */
 }
 
@@ -240,7 +253,7 @@ footer a:hover {
 }
 
 #servicios .card-footer .btn-more:focus {
-    box-shadow: 0 0 0 0.15rem rgba(255, 255, 255, 0.08) !important; /* foco accesible y sutil */
+    box-shadow: var(--focus-ring) !important; /* foco accesible y sutil */
 }
 
 /* Borde animado tipo "culebrita" (marching ants) alrededor del rectángulo */
@@ -291,7 +304,7 @@ footer a:hover {
     border: 0;
     background-color: var(--color-11);
     color: var(--color-1);
-    box-shadow: 0 24px 60px rgba(0,0,0,0.6);
+    box-shadow: var(--shadow-4);
 }
 .modal-header, .modal-footer { border: 0; }
 .modal-header .btn-close { filter: invert(1); opacity: .8; }

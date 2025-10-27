@@ -17,9 +17,9 @@
     backdrop-filter: blur(6px);
     border: 1px solid rgba(255, 255, 255, 0.08);
     /* Progressive enhancement (opcional): si se desea reactivar color-mix, añadirlo aquí */
-    border-radius: 999px;
+    border-radius: var(--radius-pill);
     padding: 0.5rem;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
+    box-shadow: var(--shadow-2);
 }
 
 .floating-menu ul {
@@ -42,18 +42,27 @@
 }
 
 .floating-menu .fm-link:hover {
-    background: rgba(var(--bs-primary-rgb), 0.10);
-    color: var(--bs-primary);
+    background: rgba(var(--accent-rgb), 0.10);
+    color: var(--accent-primary);
 }
 
 .floating-menu .fm-link:focus-visible {
-    box-shadow: 0 0 0 3px rgba(var(--bs-primary-rgb), 0.30);
+    box-shadow: 0 0 0 3px rgba(var(--accent-rgb), 0.30);
 }
 
 .floating-menu .fm-link.active,
 .floating-menu .fm-link[aria-current="true"] {
-    color: var(--bs-primary);
-    background: rgba(var(--bs-primary-rgb), 0.12);
+    color: var(--accent-primary);
+    background: rgba(var(--accent-rgb), 0.12);
+}
+
+/* Tema claro: iconos blancos en el menú de navegación inferior */
+[data-theme="light"] .floating-menu .fm-link,
+[data-theme="light"] .floating-menu .fm-link:hover,
+[data-theme="light"] .floating-menu .fm-link:focus-visible,
+[data-theme="light"] .floating-menu .fm-link.active,
+[data-theme="light"] .floating-menu .fm-link[aria-current="true"] {
+    color: #FFFFFF;
 }
 
 /* Tamaños y separación en pantallas grandes */

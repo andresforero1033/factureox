@@ -11,4 +11,85 @@
     --color-10: #051042;
     --color-11: #020618;
     --color-12: #000000;
+
+    /* Opacidades del overlay del hero (valores por defecto: móvil) */
+    --hero-overlay-top: .60;
+    --hero-overlay-mid: .45;
+    --hero-overlay-bottom: .70;
+
+    /* Acentos unificados */
+    --accent-primary: var(--color-4);
+    --accent-strong: var(--color-6);
+    --accent-weak: var(--color-3);
+    --accent-rgb: 104, 129, 243; /* rgb de --color-4 */
+    --accent-gradient: linear-gradient(90deg, var(--accent-strong), var(--accent-primary));
+
+    /* Radios y gaps (escala) */
+    --radius-sm: .375rem;
+    --radius-md: .5rem;
+    --radius-lg: .75rem;
+    --radius-card: .75rem;
+    --radius-pill: 999px;
+
+    --gap-1: .25rem;
+    --gap-2: .5rem;
+    --gap-3: .75rem;
+    --gap-4: 1rem;
+
+    /* Sombras unificadas */
+    --shadow-1: 0 4px 12px rgba(0,0,0,.18);
+    --shadow-2: 0 10px 30px rgba(0,0,0,.25);
+    --shadow-3: 0 8px 24px rgba(0,0,0,.35);
+    --shadow-4: 0 24px 60px rgba(0,0,0,.6);
+
+    /* Ring de foco accesible en dark */
+    --focus-ring: 0 0 0 0.15rem rgba(255, 255, 255, 0.08);
+}
+
+/* Tablet: reducir un poco la opacidad para dejar ver más imagen */
+@media (min-width: 768px) {
+    :root {
+        --hero-overlay-top: .55;
+        --hero-overlay-mid: .35;
+        --hero-overlay-bottom: .60;
+    }
+}
+
+/* XL: aún más sutil en pantallas grandes */
+@media (min-width: 1200px) {
+    :root {
+        --hero-overlay-top: .50;
+        --hero-overlay-mid: .30;
+        --hero-overlay-bottom: .55;
+    }
+}
+
+/* Tema claro: activar en el contenedor raíz (html/body) con [data-theme="light"] */
+[data-theme="light"] {
+    /* Escala de colores basada en la paleta provista */
+    --color-1: #1B1913; /* texto principal (oscuro) */
+    --color-2: #44174E;
+    --color-3: #662249;
+    --color-4: #A34054; /* acento principal (rose) */
+    --color-5: #ED9E59; /* acento cálido (highlight) */
+    --color-6: #E0BCB9; /* tonos claros de soporte */
+    /* reutilizaciones para completar escala */
+    --color-7: #44174E;
+    --color-8: #662249;
+    --color-9: #A34054;  /* bordes sutiles en claro */
+    --color-10: #E0BCB9; /* fondo de página */
+    --color-11: #E0BCB9; /* fondo de tarjetas/footers */
+    --color-12: #E0BCB9; /* reserva */
+
+    /* Acentos unificados en claro */
+    --accent-primary: #A34054; /* rose */
+    --accent-strong: #662249;  /* profundo */
+    --accent-weak: #ED9E59;    /* cálido */
+    --accent-rgb: 163, 64, 84; /* A34054 */
+    --accent-gradient: linear-gradient(90deg, var(--accent-strong), var(--accent-primary));
+
+    /* Ajuste sutil de overlay del hero sobre imagen (ligeramente menor en claro) */
+    --hero-overlay-top: .40;
+    --hero-overlay-mid: .25;
+    --hero-overlay-bottom: .45;
 }
