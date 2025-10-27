@@ -122,15 +122,15 @@ def register():
 def dashboard():
     # Métricas resumidas para las tarjetas
     try:
-        products_count = collection('productos').count_documents({})
+        products_count = collection('productos').count_documents({'owner_id': ObjectId(current_user.id)})
     except Exception:
         products_count = 0
     try:
-        clients_count = collection('clientes').count_documents({})
+        clients_count = collection('clientes').count_documents({'owner_id': ObjectId(current_user.id)})
     except Exception:
         clients_count = 0
     try:
-        sales_count = collection('ventas').count_documents({})
+        sales_count = collection('ventas').count_documents({'owner_id': ObjectId(current_user.id)})
     except Exception:
         sales_count = 0
 

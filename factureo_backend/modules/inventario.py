@@ -1,5 +1,5 @@
 from flask import Blueprint, render_template, request, redirect, url_for, flash
-from flask_login import login_required
+from flask_login import login_required, current_user
 from db import collection, ObjectId
 
 inventario_bp = Blueprint('inventario', __name__)
@@ -8,7 +8,8 @@ inventario_bp = Blueprint('inventario', __name__)
 @inventario_bp.route('/')
 @login_required
 def list_products():
-    productos = list(collection('productos').find())
+    owner_id = ObjectId(current_user.id)
+    productos = list(collection('productos').find({'owner_id': owner_id}))
     return render_template('inventario.html', productos=productos)
 
 
@@ -28,7 +29,8 @@ def create_product():
         'nombre': nombre,
         'cantidad': cantidad,
         'precio': precio,
-        'categoria': categoria
+        'categoria': categoria,
+        'owner_id': ObjectId(current_user.id)
     })
     flash('Producto creado', 'success')
     return redirect(url_for('inventario.list_products'))
@@ -42,7 +44,8 @@ def edit_product(id):
     precio = float(request.form.get('precio', '0') or 0)
     categoria = request.form.get('categoria', '').strip()
 
-    collection('productos').update_one({'_id': ObjectId(id)}, {
+    owner_id = ObjectId(current_user.id)
+    collection('productos').update_one({'_id': ObjectId(id), 'owner_id': owner_id}, {
         '$set': {
             'nombre': nombre,
             'cantidad': cantidad,
@@ -57,6 +60,7 @@ def edit_product(id):
 @inventario_bp.route('/eliminar/<id>', methods=['POST'])
 @login_required
 def delete_product(id):
-    collection('productos').delete_one({'_id': ObjectId(id)})
+    owner_id = ObjectId(current_user.id)
+    collection('productos').delete_one({'_id': ObjectId(id), 'owner_id': owner_id})
     flash('Producto eliminado', 'info')
     return redirect(url_for('inventario.list_products'))

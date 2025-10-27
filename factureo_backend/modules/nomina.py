@@ -1,5 +1,5 @@
 from flask import Blueprint, render_template, request, redirect, url_for, flash, current_app, send_file
-from flask_login import login_required
+from flask_login import login_required, current_user
 from db import collection, ObjectId
 from datetime import datetime
 from io import StringIO, BytesIO
@@ -24,7 +24,9 @@ def _get_conf():
 @login_required
 def home():
     # Resumen simple: últimas liquidaciones por periodo
+    owner_id = ObjectId(current_user.id)
     runs = list(collection('nomina').aggregate([
+        { '$match': { 'owner_id': owner_id } },
         { '$sort': { 'period': -1, 'created_at': -1 } },
         { '$group': {
             '_id': '$period',
@@ -43,7 +45,8 @@ def home():
 @nomina_bp.route('/empleados')
 @login_required
 def empleados_list():
-    empleados = list(collection('empleados').find({}).sort('name', 1))
+    owner_id = ObjectId(current_user.id)
+    empleados = list(collection('empleados').find({'owner_id': owner_id}).sort('name', 1))
     return render_template('nomina_empleados_list.html', empleados=empleados)
 
 
@@ -75,6 +78,7 @@ def empleados_new():
             'eligible_transport': eligible_transport,
             'created_at': _now()
         }
+        doc['owner_id'] = ObjectId(current_user.id)
         res = collection('empleados').insert_one(doc)
         flash('Empleado creado.', 'success')
         return redirect(url_for('nomina.empleados_list'))
@@ -85,7 +89,8 @@ def empleados_new():
 @login_required
 def empleados_edit(id):
     empleados = collection('empleados')
-    emp = empleados.find_one({'_id': ObjectId(id)})
+    owner_id = ObjectId(current_user.id)
+    emp = empleados.find_one({'_id': ObjectId(id), 'owner_id': owner_id})
     if not emp:
         flash('Empleado no encontrado', 'danger')
         return redirect(url_for('nomina.empleados_list'))
@@ -102,7 +107,7 @@ def empleados_edit(id):
         if not name or not doc_id or base_salary <= 0:
             flash('Nombre, documento y salario base son obligatorios.', 'warning')
             return render_template('nomina_empleados_form.html', emp=emp)
-        empleados.update_one({'_id': emp['_id']}, {'$set': {
+        empleados.update_one({'_id': emp['_id'], 'owner_id': owner_id}, {'$set': {
             'name': name,
             'document_id': doc_id,
             'position': position,
@@ -123,23 +128,24 @@ def empleados_edit(id):
 @login_required
 def empleados_delete(id):
     empleados = collection('empleados')
+    owner_id = ObjectId(current_user.id)
     try:
         emp_id = ObjectId(id)
     except Exception:
         flash('Identificador inválido.', 'danger')
         return redirect(url_for('nomina.empleados_list'))
-    emp = empleados.find_one({'_id': emp_id})
+    emp = empleados.find_one({'_id': emp_id, 'owner_id': owner_id})
     if not emp:
         flash('Empleado no encontrado.', 'warning')
         return redirect(url_for('nomina.empleados_list'))
     cascade = (request.form.get('cascade') == '1')
-    runs_count = collection('nomina').count_documents({'empleado_id': emp_id})
+    runs_count = collection('nomina').count_documents({'empleado_id': emp_id, 'owner_id': owner_id})
     if runs_count and not cascade:
         flash('No se puede eliminar: el empleado tiene liquidaciones asociadas. Usa "Eliminar todo" si deseas borrar también sus liquidaciones.', 'warning')
         return redirect(url_for('nomina.empleados_list'))
     if cascade and runs_count:
-        collection('nomina').delete_many({'empleado_id': emp_id})
-    empleados.delete_one({'_id': emp_id})
+        collection('nomina').delete_many({'empleado_id': emp_id, 'owner_id': owner_id})
+    empleados.delete_one({'_id': emp_id, 'owner_id': owner_id})
     flash('Empleado eliminado correctamente.' + (' (con liquidaciones)' if cascade else ''), 'success')
     return redirect(url_for('nomina.empleados_list'))
 
@@ -156,14 +162,15 @@ def generar():
             flash('Periodo inválido.', 'warning')
             return render_template('nomina_generar.html', conf=conf)
         period = int(f"{year:04d}{month:02d}")
-        empleados = list(collection('empleados').find({'active': True}))
+        owner_id = ObjectId(current_user.id)
+        empleados = list(collection('empleados').find({'active': True, 'owner_id': owner_id}))
         if not empleados:
             flash('No hay empleados activos.', 'info')
             return render_template('nomina_generar.html', conf=conf)
         created = 0
         for emp in empleados:
             # Evitar duplicado del periodo por empleado
-            exists = collection('nomina').find_one({'period': period, 'empleado_id': emp['_id']})
+            exists = collection('nomina').find_one({'period': period, 'empleado_id': emp['_id'], 'owner_id': owner_id})
             if exists:
                 continue
             base_salary = int(emp.get('base_salary', 0))
@@ -204,7 +211,8 @@ def generar():
                     'deducciones': deducciones,
                     'neto': neto
                 },
-                'created_at': _now()
+                'created_at': _now(),
+                'owner_id': owner_id
             }
             collection('nomina').insert_one(doc)
             created += 1
@@ -223,6 +231,7 @@ def list_runs():
     q = {}
     if year and month:
         q['period'] = int(f"{year:04d}{month:02d}")
+    q['owner_id'] = ObjectId(current_user.id)
     items = list(collection('nomina').find(q).sort([('period', -1), ('created_at', -1)]))
     return render_template('nomina_list.html', items=items)
 
@@ -230,7 +239,7 @@ def list_runs():
 @nomina_bp.route('/comprobante/<id>')
 @login_required
 def comprobante(id):
-    doc = collection('nomina').find_one({'_id': ObjectId(id)})
+    doc = collection('nomina').find_one({'_id': ObjectId(id), 'owner_id': ObjectId(current_user.id)})
     if not doc:
         flash('Comprobante no encontrado.', 'danger')
         return redirect(url_for('nomina.home'))
@@ -325,7 +334,7 @@ def _generate_payslip_pdf(doc):
 @nomina_bp.route('/comprobante/<id>/pdf')
 @login_required
 def comprobante_pdf(id):
-    doc = collection('nomina').find_one({'_id': ObjectId(id)})
+    doc = collection('nomina').find_one({'_id': ObjectId(id), 'owner_id': ObjectId(current_user.id)})
     if not doc:
         flash('Comprobante no encontrado.', 'danger')
         return redirect(url_for('nomina.home'))
@@ -372,7 +381,7 @@ def _send_email_with_attachment(to_email: str, subject: str, body_text: str, fil
 @nomina_bp.route('/comprobante/<id>/enviar', methods=['POST'])
 @login_required
 def comprobante_enviar(id):
-    doc = collection('nomina').find_one({'_id': ObjectId(id)})
+    doc = collection('nomina').find_one({'_id': ObjectId(id), 'owner_id': ObjectId(current_user.id)})
     if not doc:
         flash('Comprobante no encontrado.', 'danger')
         return redirect(url_for('nomina.home'))
@@ -381,7 +390,7 @@ def comprobante_enviar(id):
     emp_id = doc.get('empleado_id')
     emp = None
     if emp_id:
-        emp = collection('empleados').find_one({'_id': emp_id})
+        emp = collection('empleados').find_one({'_id': emp_id, 'owner_id': ObjectId(current_user.id)})
     to_email = (emp or {}).get('email')
     if not to_email:
         flash('El empleado no tiene un correo registrado. Actualiza su ficha para poder enviar el comprobante.', 'warning')

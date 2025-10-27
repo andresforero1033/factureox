@@ -1,5 +1,5 @@
 from flask import Blueprint, render_template, request, redirect, url_for, flash
-from flask_login import login_required
+from flask_login import login_required, current_user
 from db import collection, ObjectId
 
 clientes_bp = Blueprint('clientes', __name__)
@@ -8,7 +8,8 @@ clientes_bp = Blueprint('clientes', __name__)
 @clientes_bp.route('/')
 @login_required
 def list_clients():
-    clientes = list(collection('clientes').find())
+    owner_id = ObjectId(current_user.id)
+    clientes = list(collection('clientes').find({'owner_id': owner_id}))
     return render_template('clientes.html', clientes=clientes)
 
 
@@ -28,7 +29,8 @@ def create_client():
         'nombre': nombre,
         'correo': correo,
         'telefono': telefono,
-        'direccion': direccion
+        'direccion': direccion,
+        'owner_id': ObjectId(current_user.id)
     })
     flash('Cliente creado', 'success')
     return redirect(url_for('clientes.list_clients'))
@@ -42,7 +44,8 @@ def edit_client(id):
     telefono = request.form.get('telefono', '').strip()
     direccion = request.form.get('direccion', '').strip()
 
-    collection('clientes').update_one({'_id': ObjectId(id)}, {
+    owner_id = ObjectId(current_user.id)
+    collection('clientes').update_one({'_id': ObjectId(id), 'owner_id': owner_id}, {
         '$set': {
             'nombre': nombre,
             'correo': correo,
@@ -57,6 +60,7 @@ def edit_client(id):
 @clientes_bp.route('/eliminar/<id>', methods=['POST'])
 @login_required
 def delete_client(id):
-    collection('clientes').delete_one({'_id': ObjectId(id)})
+    owner_id = ObjectId(current_user.id)
+    collection('clientes').delete_one({'_id': ObjectId(id), 'owner_id': owner_id})
     flash('Cliente eliminado', 'info')
     return redirect(url_for('clientes.list_clients'))
