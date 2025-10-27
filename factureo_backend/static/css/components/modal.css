@@ -1,0 +1,10 @@
+/* Modales sin bordes visibles y con tema oscuro */
+.modal-content {
+    border: 0;
+    background-color: var(--color-12);
+    color: var(--color-1);
+    box-shadow: 0 24px 60px rgba(0,0,0,0.6);
+}
+.modal-header, .modal-footer { border: 0; }
+.modal-header .btn-close { filter: invert(1); opacity: .8; }
+.modal-header .btn-close:hover { opacity: 1; }

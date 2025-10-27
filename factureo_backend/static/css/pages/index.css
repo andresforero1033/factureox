@@ -1,0 +1,122 @@
+/* Página: index (landing) */
+
+/* Alineación solo para tarjetas en la sección Servicios */
+#servicios .col-md-6.col-lg-3 {
+    display: flex;
+}
+
+#servicios .card {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+#servicios .card-body {
+    display: flex;
+    flex-direction: column;
+    flex: 1 1 auto;
+}
+
+#servicios .card-body .btn-more {
+    margin-top: auto !important;
+}
+
+#servicios .card-footer {
+    display: flex;
+    justify-content: center;
+    border-top: 1px solid transparent;
+    /* el borde existe, pero no se ve */
+    padding-top: 0.5rem;
+    /* leve separación del contenido */
+    padding-bottom: 0.75rem;
+    /* respiro desde el borde inferior */
+}
+
+/* Botón más ancho y con mismo fondo de la tarjeta */
+#servicios .card-footer .btn-more {
+    min-width: 65%;
+    background-color: var(--color-11) !important;
+    /* mismo fondo que la tarjeta */
+    color: var(--color-1) !important;
+    border-color: transparent !important;
+    /* sin borde visible */
+    position: relative;
+    border-radius: 0.5rem;
+    z-index: 0;
+}
+
+/* Hover/active sin parpadeos */
+#servicios .card-footer .btn-more:hover,
+#servicios .card-footer .btn-more:active {
+    background-color: var(--color-11) !important;
+    color: var(--color-2) !important;
+}
+
+#servicios .card-footer .btn-more:focus {
+    box-shadow: 0 0 0 0.15rem rgba(255, 255, 255, 0.08) !important;
+}
+
+/* Borde animado tipo "culebrita" (marching ants) */
+#servicios .card-footer .btn-more::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.2s ease;
+    --t: 2px;
+    --d: 16px;
+    --c: var(--color-4);
+    background: linear-gradient(90deg, var(--c) 50%, #0000 0) top/var(--d) var(--t) repeat-x,
+        linear-gradient(90deg, var(--c) 50%, #0000 0) bottom/var(--d) var(--t) repeat-x,
+        linear-gradient(0deg, var(--c) 50%, #0000 0) left/var(--t) var(--d) repeat-y,
+        linear-gradient(0deg, var(--c) 50%, #0000 0) right/var(--t) var(--d) repeat-y;
+    animation: ants 1.8s linear infinite;
+}
+
+#servicios .card-footer .btn-more:hover::before,
+#servicios .card-footer .btn-more:focus::before {
+    opacity: 1;
+}
+
+@keyframes ants {
+    to {
+        background-position: var(--d) 0, calc(-1 * var(--d)) 100%, 0 var(--d),
+            100% calc(-1 * var(--d));
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    #servicios .card-footer .btn-more::before {
+        animation: none;
+    }
+}
+
+/* Tarjetas de Servicios más grandes en escritorio */
+@media (min-width: 992px) {
+    #servicios .card {
+        min-height: 380px;
+    }
+
+    #servicios .card-body {
+        padding: 1.75rem 1.5rem;
+    }
+
+    #servicios .card-title {
+        font-size: 1.25rem;
+    }
+
+    #servicios ul {
+        font-size: 1.0625rem;
+    }
+
+    #servicios .card-footer {
+        padding-top: 0.9rem;
+        padding-bottom: 1.1rem;
+    }
+
+    #servicios .card-footer .btn-more {
+        min-width: 72%;
+    }
+}

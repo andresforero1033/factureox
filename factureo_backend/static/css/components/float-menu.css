@@ -1,0 +1,112 @@
+/* Menú flotante de navegación por secciones (index)
+   - Posición fija a la derecha, centrado vertical
+   - Estilo acorde a tema oscuro
+   - Oculto en pantallas pequeñas (se controla también con clase utilitaria en el HTML)
+*/
+
+.floating-menu {
+    position: fixed;
+    top: 50%;
+    right: 1rem;
+    transform: translateY(-50%);
+    z-index: 1030;
+    /* por debajo de los modales de Bootstrap (1050+) */
+    /* Fallbacks */
+    background-color: rgba(0, 0, 0, 0.4);
+    -webkit-backdrop-filter: blur(6px);
+    backdrop-filter: blur(6px);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    /* Progressive enhancement (opcional): si se desea reactivar color-mix, añadirlo aquí */
+    border-radius: 999px;
+    padding: 0.5rem;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
+}
+
+.floating-menu ul {
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+}
+
+.floating-menu .fm-link {
+    --size: 44px;
+    width: var(--size);
+    height: var(--size);
+    display: grid;
+    place-items: center;
+    border-radius: 50%;
+    color: var(--bs-body-color);
+    text-decoration: none;
+    outline: none;
+    position: relative;
+}
+
+.floating-menu .fm-link:hover {
+    background: rgba(var(--bs-primary-rgb), 0.10);
+    color: var(--bs-primary);
+}
+
+.floating-menu .fm-link:focus-visible {
+    box-shadow: 0 0 0 3px rgba(var(--bs-primary-rgb), 0.30);
+}
+
+.floating-menu .fm-link.active,
+.floating-menu .fm-link[aria-current="true"] {
+    color: var(--bs-primary);
+    background: rgba(var(--bs-primary-rgb), 0.12);
+}
+
+/* Tamaños y separación en pantallas grandes */
+@media (min-width: 992px) {
+    .floating-menu {
+        right: 1.25rem;
+        padding: 0.6rem;
+    }
+
+    .floating-menu .fm-link {
+        --size: 48px;
+    }
+}
+
+/* Evitar superposición con el footer cuando se alcanza el final de la página (margen inferior visual) */
+@media (min-width: 768px) {
+    .floating-menu {
+        margin-bottom: 3rem;
+    }
+}
+
+/* Móvil: barra inferior horizontal fija */
+@media (max-width: 767.98px) {
+    .floating-menu {
+        top: auto;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        transform: none;
+        border-radius: 0;
+        border-left: 0;
+        border-right: 0;
+        border-bottom: 0;
+        padding: 0.35rem 0.5rem calc(0.35rem + env(safe-area-inset-bottom));
+        display: flex;
+        justify-content: center;
+    }
+
+    .floating-menu ul {
+        flex-direction: row;
+        gap: 0.25rem;
+        width: 100%;
+        max-width: 640px;
+        /* ancho cómodo centrado */
+        justify-content: space-around;
+    }
+
+    /* Espacio inferior del cuerpo para que el contenido no quede detrás de la barra */
+    body {
+        padding-bottom: calc(64px + env(safe-area-inset-bottom));
+    }
+
+    .floating-menu .fm-link {
+        --size: 44px;
+    }
+}

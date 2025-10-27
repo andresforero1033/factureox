@@ -1,0 +1,49 @@
+/* Tarjetas */
+.card {
+    border-radius: 12px;
+    background-color: var(--color-12);
+    color: var(--color-1);
+    border: 1px solid var(--color-6);
+}
+
+/* Hover genérico */
+.hover-card {
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.hover-card:hover {
+    transform: translateY(-2px) scale(1.01);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+}
+
+/* Tarjeta de producto/servicio */
+.product-card {
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.product-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+}
+
+.product-card .price {
+    font-weight: 700;
+    color: var(--color-2);
+}
+
+.product-card .category {
+    background-color: var(--color-9);
+    color: var(--color-1);
+    border: 1px solid var(--color-8);
+}
+
+/* Desktop: ajustes de tarjetas globales */
+@media (min-width: 992px) {
+    .card .card-title {
+        font-size: 1.15rem;
+    }
+
+    .card .card-body {
+        padding: 1.25rem 1.25rem;
+    }
+}

@@ -8,12 +8,12 @@
                 <h3 class="mb-4 text-center">Iniciar sesión</h3>
                 <form method="POST">
                     <div class="mb-3">
-                        <label class="form-label">Correo</label>
-                        <input type="email" class="form-control" name="email" placeholder="correo@ejemplo.com" required>
+                        <label for="email" class="form-label">Correo</label>
+                        <input id="email" type="email" class="form-control" name="email" placeholder="correo@ejemplo.com" autocomplete="username" required>
                     </div>
                     <div class="mb-3">
-                        <label class="form-label">Contraseña</label>
-                        <input type="password" class="form-control" name="password" required>
+                        <label for="password" class="form-label">Contraseña</label>
+                        <input id="password" type="password" class="form-control" name="password" placeholder="••••••••" autocomplete="current-password" required>
                     </div>
                     <div class="d-grid gap-2">
                         <button type="submit" class="btn btn-primary"><i class="bi bi-box-arrow-in-right"></i>

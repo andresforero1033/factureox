@@ -1,26 +1,298 @@
 :root {
-  --color-1: #E7EBFD;
-  --color-2: #BDC8FA;
-  --color-3: #92A5F6;
-  --color-4: #6881F3;
-  --color-5: #3E5EEF;
-  --color-6: #133BEC;
-  --color-7: #1030C1;
-  --color-8: #0C2697;
-  --color-9: #091B6D;
-  --color-10: #051042;
-  --color-11: #020618;
+    --color-1: #e7ebfd;
+    --color-2: #bdc8fa;
+    --color-3: #92a5f6;
+    --color-4: #6881f3;
+    --color-5: #3e5eef;
+    --color-6: #133bec;
+    --color-7: #1030c1;
+    --color-8: #0c2697;
+    --color-9: #091b6d;
+    --color-10: #051042;
+    --color-11: #020618;
 }
 
-body { background-color: var(--color-1); }
-.navbar { background: linear-gradient(90deg, var(--color-5), var(--color-7)); }
-h1, .display-5 { font-family: 'Montserrat Alternates', sans-serif; }
-h2, h3, h4 { font-family: 'Playwrite DE Grund', cursive; }
-p, .lead { font-family: 'Poiret One', cursive; }
+/* Tema oscuro y tipografía más legible */
+body {
+    background-color: var(--color-10);
+    color: var(--color-1);
+    font-family: "Montserrat", system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+    font-weight: 100;
+}
 
-.font-title { font-family: 'Montserrat Alternates', sans-serif; }
-.font-paragraph { font-family: 'Poiret One', cursive; }
-.font-subtitle { font-family: 'Playwrite DE Grund', cursive; }
+.navbar {
+    background: linear-gradient(90deg, var(--color-11), var(--color-10));
+}
 
-.card { border-radius: 12px; }
-footer { font-size: 0.9rem; }
+.navbar .navbar-brand.brand-logo {
+    font-family: "Pacifico", cursive;
+    color: var(--color-1);
+    font-size: clamp(1.3rem, 1rem + 1vw, 1.9rem);
+    letter-spacing: 0.5px;
+    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+    position: relative;
+}
+
+.navbar .navbar-brand.brand-logo:hover {
+    color: var(--color-2);
+}
+
+.navbar .navbar-brand.brand-logo::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: -4px;
+    height: 2px;
+    width: 100%;
+    background: linear-gradient(90deg, var(--color-6), var(--color-4));
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.25s ease;
+    opacity: 0.85;
+}
+
+.navbar .navbar-brand.brand-logo:hover::after {
+    transform: scaleX(1);
+}
+
+.navbar .logo-img {
+    width: 28px;
+    height: 28px;
+    display: inline-block;
+}
+
+h1,
+.display-5 {
+    font-family: "Montserrat", system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+}
+
+h2,
+h3,
+h4 {
+    font-family: "Montserrat", system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+}
+
+p,
+.lead {
+    font-weight: 100;
+    font-family: "Montserrat", system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+}
+
+.font-title {
+    font-family: "Montserrat", system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+}
+
+.font-paragraph {
+    font-family: "Montserrat", system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+}
+
+.font-subtitle {
+    font-family: "Montserrat", system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+}
+
+/* Enlaces sobre fondo oscuro */
+a,
+.nav-link {
+    color: var(--color-2);
+}
+
+a:hover,
+.nav-link:hover {
+    color: var(--color-1);
+    text-decoration: underline;
+}
+
+/* Tarjetas en modo oscuro */
+.card {
+    border-radius: 12px;
+    background-color: var(--color-11);
+    color: var(--color-1);
+    border: 1px solid var(--color-9);
+}
+
+/* Tarjetas genéricas con efecto hover */
+.hover-card {
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.hover-card:hover {
+    transform: translateY(-2px) scale(1.01);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+}
+
+/* Tarjeta de producto/servicio */
+.product-card {
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.product-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+}
+
+.product-card .price {
+    font-weight: 100;
+    color: var(--color-2);
+}
+
+.product-card .category {
+    background-color: var(--color-9);
+    color: var(--color-1);
+    border: 1px solid var(--color-8);
+}
+
+footer {
+    font-size: 0.9rem;
+    background-color: var(--color-11);
+    color: var(--color-2);
+    border-top: 1px solid var(--color-9);
+}
+
+footer a {
+    color: var(--color-2);
+}
+
+footer a:hover {
+    color: var(--color-1);
+}
+
+/* Héroe a pantalla completa (sin animaciones) */
+.hero-full {
+    min-height: 100dvh;
+    /* viewport dinámico, mejor en móviles */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    /* centra horizontalmente */
+    justify-content: center;
+    /* centra verticalmente */
+    gap: 0.75rem;
+    /* separa h1, p y botón sin alterar márgenes */
+}
+
+/* Secciones a pantalla completa (variantes) */
+.section-full {
+    min-height: 100dvh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+/* Variante para secciones con grillas/columns: centra verticalmente el contenido */
+.section-full>.row,
+.section-full>.container,
+.section-full>.container-fluid {
+    align-items: center;
+}
+
+/* (se removió el héroe animado por solicitud) */
+
+/* Escalado en escritorio: mejora legibilidad sin afectar móviles */
+@media (min-width: 992px) {
+    html { font-size: 110%; } /* +10% global en desktop */
+    body { font-size: 1.0625rem; } /* ~17px */
+    h1, .display-5 { font-size: clamp(2.25rem, 1.5rem + 2vw, 3rem); }
+    .lead { font-size: 1.125rem; }
+    .card .card-title { font-size: 1.15rem; }
+    .card .card-body { padding: 1.25rem 1.25rem; }
+    .btn { font-size: 1rem; padding: 0.65rem 1.1rem; }
+    /* más respiro entre secciones en desktop */
+    .section-full { padding-top: 4rem; padding-bottom: 4rem; }
+    .hero-full { padding-top: 5rem; padding-bottom: 5rem; }
+}
+
+/* Alineación solo para tarjetas en la sección Servicios */
+#servicios .col-md-6.col-lg-3 { display: flex; }
+#servicios .card { display: flex; flex-direction: column; height: 100%; }
+#servicios .card-body {
+    display: flex;
+    flex-direction: column;
+    flex: 1 1 auto; /* que ocupe toda la altura disponible */
+}
+#servicios .card-body .btn-more {
+    margin-top: auto !important; /* sobreescribe .mt-3 de Bootstrap (usa !important) */
+}
+
+#servicios .card-footer {
+    display: flex;
+    justify-content: center;
+    border-top: 1px solid transparent; /* el borde existe, pero no se ve */
+    padding-top: 0.5rem; /* leve separación del contenido */
+    padding-bottom: 0.75rem; /* respiro desde el borde inferior */
+}
+
+/* Botón un poco más ancho y cómodo para clic */
+#servicios .card-footer .btn-more {
+    min-width: 65%;
+    background-color: var(--color-11) !important; /* mismo fondo que la tarjeta */
+    color: var(--color-1) !important;
+    border-color: transparent !important; /* sin borde visible */
+    position: relative;
+    border-radius: .5rem; /* un poco más redondeado, puedes ajustar */
+    z-index: 0; /* para aislar pseudo-elemento */
+}
+
+/* Estados hover/focus/active manteniendo mismo fondo (sin parpadeos) */
+#servicios .card-footer .btn-more:hover,
+#servicios .card-footer .btn-more:active {
+    background-color: var(--color-11) !important;
+    color: var(--color-2) !important; /* leve contraste al pasar el mouse */
+}
+
+#servicios .card-footer .btn-more:focus {
+    box-shadow: 0 0 0 0.15rem rgba(255, 255, 255, 0.08) !important; /* foco accesible y sutil */
+}
+
+/* Borde animado tipo "culebrita" (marching ants) alrededor del rectángulo */
+#servicios .card-footer .btn-more::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        border-radius: inherit;
+        pointer-events: none;
+        opacity: 0; /* oculto por defecto */
+        transition: opacity .2s ease;
+        /* variables del borde */
+        --t: 2px;            /* grosor del borde */
+        --d: 16px;           /* largo del dash + gap */
+        --c: var(--color-4); /* color de la "culebrita" */
+        /* 4 fondos: arriba, abajo, izquierda, derecha */
+        background:
+            linear-gradient(90deg, var(--c) 50%, #0000 0) top/var(--d) var(--t) repeat-x,
+            linear-gradient(90deg, var(--c) 50%, #0000 0) bottom/var(--d) var(--t) repeat-x,
+            linear-gradient(0deg,  var(--c) 50%, #0000 0) left/var(--t) var(--d) repeat-y,
+            linear-gradient(0deg,  var(--c) 50%, #0000 0) right/var(--t) var(--d) repeat-y;
+        animation: ants 1.8s linear infinite;
+}
+
+#servicios .card-footer .btn-more:hover::before,
+#servicios .card-footer .btn-more:focus::before {
+        opacity: 1; /* aparece al hover/focus */
+}
+
+@keyframes ants {
+    to {
+        background-position:
+            var(--d) 0,                   /* arriba: hacia la derecha */
+            calc(-1*var(--d)) 100%,       /* abajo: hacia la izquierda */
+            0 var(--d),                   /* izquierda: hacia abajo */
+            100% calc(-1*var(--d));       /* derecha: hacia arriba */
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    #servicios .card-footer .btn-more::before {
+        animation: none; /* respeta preferencias de movimiento reducido */
+    }
+}
+
+/* Modales sin bordes visibles y con tema oscuro */
+.modal-content {
+    border: 0;
+    background-color: var(--color-11);
+    color: var(--color-1);
+    box-shadow: 0 24px 60px rgba(0,0,0,0.6);
+}
+.modal-header, .modal-footer { border: 0; }
+.modal-header .btn-close { filter: invert(1); opacity: .8; }
+.modal-header .btn-close:hover { opacity: 1; }

@@ -2,6 +2,12 @@
 {% block title %}Inventario - Factureo{% endblock %}
 {% block content %}
 <h3>Inventario</h3>
+<div class="d-flex justify-content-end mb-2">
+    <div class="btn-group" role="group" aria-label="Cambiar vista">
+        <button class="btn btn-outline-light btn-sm" id="btnVistaTarjetas" onclick="document.getElementById('vista-tarjetas').classList.remove('d-none');document.getElementById('vista-tabla').classList.add('d-none');">Tarjetas</button>
+        <button class="btn btn-outline-light btn-sm" id="btnVistaTabla" onclick="document.getElementById('vista-tabla').classList.remove('d-none');document.getElementById('vista-tarjetas').classList.add('d-none');">Tabla</button>
+    </div>
+    </div>
 <form class="row g-2 mb-3" method="POST" action="{{ url_for('inventario.create_product') }}">
     <div class="col-md-3"><input class="form-control" name="nombre" placeholder="Nombre" title="Nombre del producto"
             required></div>
@@ -14,6 +20,40 @@
                 class="bi bi-plus-circle"></i> Agregar</button></div>
 </form>
 
+<div id="vista-tarjetas" class="row g-3 d-none">
+    {% for p in productos %}
+    <div class="col-sm-6 col-md-4 col-lg-3">
+        <div class="card product-card h-100">
+            <div class="card-body d-flex flex-column">
+                <div class="d-flex justify-content-between align-items-start mb-2">
+                    <h5 class="card-title mb-0">{{ p.nombre }}</h5>
+                    {% if p.categoria %}<span class="badge rounded-pill category">{{ p.categoria }}</span>{% endif %}
+                </div>
+                <p class="card-text text-muted mb-2">Cantidad: {{ p.cantidad }}</p>
+                <p class="price h5 mt-auto mb-3">${{ '%.2f'|format(p.precio|float) }}</p>
+                <div class="d-flex gap-2">
+                    <form method="POST" action="{{ url_for('inventario.edit_product', id=p._id) }}" class="flex-grow-1">
+                        <input type="hidden" name="nombre" value="{{ p.nombre }}">
+                        <input type="hidden" name="cantidad" value="{{ p.cantidad }}">
+                        <input type="hidden" name="precio" value="{{ p.precio }}">
+                        <input type="hidden" name="categoria" value="{{ p.categoria }}">
+                        <button type="submit" class="btn btn-primary btn-sm w-100" title="Guardar cambios" disabled>
+                            <i class="bi bi-save"></i> Guardar
+                        </button>
+                    </form>
+                    <form method="POST" action="{{ url_for('inventario.delete_product', id=p._id) }}">
+                        <button type="submit" class="btn btn-outline-danger btn-sm" title="Eliminar producto">
+                            <i class="bi bi-trash"></i>
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+
+<div id="vista-tabla">
 <table class="table table-striped align-middle">
     <thead>
         <tr>
@@ -51,4 +91,5 @@
         {% endfor %}
     </tbody>
 </table>
+</div>
 {% endblock %}

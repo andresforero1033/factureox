@@ -1,0 +1,53 @@
+/* Transiciones suaves al hacer scroll (reveal on scroll)
+   Uso: agregar data-reveal="fade|fade-up|fade-left|fade-right|zoom-in" al elemento.
+   Soporta data-reveal-delay (ms) y data-reveal-duration (ms).
+*/
+
+:root {
+    --reveal-ease: cubic-bezier(.22, .61, .36, 1);
+}
+
+/* Estado inicial: aplicado por JS con la clase .reveal-init */
+[data-reveal].reveal-init {
+    opacity: 0;
+}
+
+/* Variantes: posición inicial */
+[data-reveal="fade-up"].reveal-init {
+    transform: translateY(16px);
+}
+
+[data-reveal="fade-left"].reveal-init {
+    transform: translateX(-16px);
+}
+
+[data-reveal="fade-right"].reveal-init {
+    transform: translateX(16px);
+}
+
+[data-reveal="zoom-in"].reveal-init {
+    transform: scale(0.98);
+}
+
+/* fade puro no requiere transform */
+
+/* Estado final al entrar en viewport */
+[data-reveal].in-view {
+    opacity: 1;
+    transform: none;
+    transition-property: opacity, transform;
+    transition-timing-function: var(--reveal-ease);
+    transition-duration: 600ms;
+}
+
+/* Respeto de reduce motion */
+@media (prefers-reduced-motion: reduce) {
+    [data-reveal].reveal-init {
+        opacity: 1;
+        transform: none;
+    }
+
+    [data-reveal].in-view {
+        transition: none;
+    }
+}

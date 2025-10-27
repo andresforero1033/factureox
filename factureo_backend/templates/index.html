@@ -1,48 +1,339 @@
 {% extends 'base.html' %}
 {% block title %}Inicio - Factureo{% endblock %}
 {% block content %}
-<section class="py-5 text-center">
+
+<!-- Menú flotante de navegación entre secciones (desktop: lateral; móvil: barra inferior) -->
+<nav id="floatingMenu" class="floating-menu d-flex" aria-label="Navegación de secciones">
+    <ul class="list-unstyled m-0 p-0">
+        <li><a class="fm-link" href="#inicio" data-section="inicio" title="Inicio"><i class="bi bi-house"></i><span
+                    class="visually-hidden">Inicio</span></a></li>
+        <li><a class="fm-link" href="#nosotros" data-section="nosotros" title="Nosotros"><i
+                    class="bi bi-people"></i><span class="visually-hidden">Nosotros</span></a></li>
+        <li><a class="fm-link" href="#servicios" data-section="servicios" title="Servicios"><i
+                    class="bi bi-grid"></i><span class="visually-hidden">Servicios</span></a></li>
+        <li><a class="fm-link" href="#noticias" data-section="noticias" title="Noticias"><i
+                    class="bi bi-newspaper"></i><span class="visually-hidden">Noticias</span></a></li>
+        <li><a class="fm-link" href="#contacto" data-section="contacto" title="Contáctenos"><i
+                    class="bi bi-envelope"></i><span class="visually-hidden">Contáctenos</span></a></li>
+    </ul>
+    <div class="visually-hidden" aria-live="polite" aria-atomic="true" id="fm-status"></div>
+</nav>
+
+<section id="inicio" class="py-5 text-center hero-full" data-reveal="fade">
     <h1 class="display-5 font-title">Bienvenido a Factureo</h1>
-    <p class="lead font-paragraph">Gestión sencilla de Inventario, Clientes y Ventas.</p>
+    <p class="lead">Gestión sencilla de Inventario, Clientes y Ventas.</p>
     <a class="btn btn-primary btn-lg" href="{{ url_for('auth.login') }}"><i class="bi bi-box-arrow-in-right"></i>
         Iniciar sesión</a>
 </section>
 
-<section id="about" class="my-5">
-    <h2 class="font-subtitle">About Us</h2>
-    <p>Factureo es una aplicación web diseñada para pequeñas y medianas empresas que desean gestionar su inventario,
-        clientes y ventas de manera eficiente y centralizada.</p>
+<section id="nosotros" class="my-5 section-full" data-reveal="fade-up">
+    <h2 class="font-subtitle mb-4">Nosotros</h2>
+    <div class="row g-4 align-items-center">
+        <div class="col-md-6">
+            <p class="mb-3">Factureo impulsa a las PyMEs a tomar decisiones informadas con una plataforma ágil y segura
+                para gestionar inventario, clientes y ventas en un solo lugar.</p>
+            <ul class="mb-3">
+                <li>Enfoque en simplicidad y velocidad.</li>
+                <li>Seguridad de datos y mejores prácticas.</li>
+                <li>Escalable: crece contigo sin fricción.</li>
+            </ul>
+        </div>
+        <div class="col-md-6">
+            <div class="row g-3">
+                <div class="col-6">
+                    <div class="card text-center hover-card">
+                        <div class="card-body">
+                            <div class="h3 mb-1">+99.9%</div>
+                            <div class="text-muted">Disponibilidad</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div class="card text-center hover-card">
+                        <div class="card-body">
+                            <div class="h3 mb-1">&lt; 3s</div>
+                            <div class="text-muted">Tiempo de carga</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div class="card text-center hover-card">
+                        <div class="card-body">
+                            <div class="h3 mb-1">AES-256</div>
+                            <div class="text-muted">Cifrado</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div class="card text-center hover-card">
+                        <div class="card-body">
+                            <div class="h3 mb-1">24/7</div>
+                            <div class="text-muted">Soporte</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </section>
 
-<section id="features" class="row g-4">
-    <div class="col-md-4">
-        <div class="card h-100">
-            <div class="card-body">
-                <h5 class="card-title"><i class="bi bi-box-seam"></i> Inventario</h5>
-                <p class="card-text">Administra productos, existencias y categorías.</p>
+<section id="servicios" class="my-5 section-full" data-reveal="fade-up" data-reveal-stagger="100"
+    data-reveal-children="fade-up">
+    <h2 class="font-subtitle mb-4">Servicios</h2>
+    <div class="row g-4 align-items-stretch">
+        <div class="col-md-6 col-lg-3 d-flex">
+            <div class="card flex-fill hover-card">
+                <div class="card-body">
+                    <h5 class="card-title"><i class="bi bi-box-seam"></i> Inventario</h5>
+                    <ul class="mb-0">
+                        <li>Control de existencias y categorías.</li>
+                        <li>Búsqueda y filtros avanzados.</li>
+                        <li>Importación CSV (próximamente).</li>
+                    </ul>
+                </div>
+                <div class="card-footer bg-transparent mt-auto pt-0">
+                    <button type="button" class="btn btn-outline-primary btn-more" data-bs-toggle="modal"
+                        data-bs-target="#modalInventario">Ver más</button>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6 col-lg-3 d-flex">
+            <div class="card flex-fill hover-card">
+                <div class="card-body">
+                    <h5 class="card-title"><i class="bi bi-people"></i> Clientes</h5>
+                    <ul class="mb-0">
+                        <li>Perfil de cliente unificado.</li>
+                        <li>Historial y segmentación.</li>
+                        <li>Integración CRM (próximamente).</li>
+                    </ul>
+                </div>
+                <div class="card-footer bg-transparent mt-auto pt-0">
+                    <button type="button" class="btn btn-outline-primary btn-more" data-bs-toggle="modal"
+                        data-bs-target="#modalClientes">Ver más</button>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6 col-lg-3 d-flex">
+            <div class="card flex-fill hover-card">
+                <div class="card-body">
+                    <h5 class="card-title"><i class="bi bi-currency-dollar"></i> Ventas</h5>
+                    <ul class="mb-0">
+                        <li>Registro rápido y comprobantes.</li>
+                        <li>Reportes y KPIs en tiempo real.</li>
+                        <li>Pago electrónico (próximamente).</li>
+                    </ul>
+                </div>
+                <div class="card-footer bg-transparent mt-auto pt-0">
+                    <button type="button" class="btn btn-outline-primary btn-more" data-bs-toggle="modal"
+                        data-bs-target="#modalVentas">Ver más</button>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6 col-lg-3 d-flex">
+            <div class="card flex-fill hover-card">
+                <div class="card-body">
+                    <h5 class="card-title"><i class="bi bi-shield-lock"></i> Seguridad</h5>
+                    <ul class="mb-0">
+                        <li>Autenticación y roles.</li>
+                        <li>Backups automáticos.</li>
+                        <li>Cifrado en tránsito y reposo.</li>
+                    </ul>
+                </div>
+                <div class="card-footer bg-transparent mt-auto pt-0">
+                    <button type="button" class="btn btn-outline-primary btn-more" data-bs-toggle="modal"
+                        data-bs-target="#modalSeguridad">Ver más</button>
+                </div>
             </div>
         </div>
     </div>
-    <div class="col-md-4">
-        <div class="card h-100">
-            <div class="card-body">
-                <h5 class="card-title"><i class="bi bi-people"></i> Clientes</h5>
-                <p class="card-text">Registra y mantiene actualizada la información de tus clientes.</p>
+
+    <!-- Modales de Servicios -->
+    <div class="modal fade" id="modalInventario" tabindex="-1" aria-labelledby="modalInventarioLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalInventarioLabel"><i class="bi bi-box-seam"></i> Inventario</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+                </div>
+                <div class="modal-body">
+                    <p class="mb-2">Administra productos, categorías y stock con búsquedas rápidas y filtros avanzados.
+                    </p>
+                    <ul>
+                        <li>Catálogo con categorías y variantes (SKU, tallas, colores).</li>
+                        <li>Ajustes de inventario con historial y notas.</li>
+                        <li>Alertas de stock mínimo y rotación.</li>
+                    </ul>
+                    <p class="mb-0"><strong>Próximamente:</strong> importación masiva CSV, plantillas y validaciones.
+                    </p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                </div>
             </div>
         </div>
     </div>
-    <div class="col-md-4">
-        <div class="card h-100">
-            <div class="card-body">
-                <h5 class="card-title"><i class="bi bi-currency-dollar"></i> Ventas</h5>
-                <p class="card-text">Registra ventas y consulta el historial reciente.</p>
+
+    <div class="modal fade" id="modalClientes" tabindex="-1" aria-labelledby="modalClientesLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalClientesLabel"><i class="bi bi-people"></i> Clientes</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+                </div>
+                <div class="modal-body">
+                    <p class="mb-2">Perfila a tus clientes con historial, segmentación y comunicaciones.</p>
+                    <ul>
+                        <li>Ficha unificada con datos de contacto y preferencias.</li>
+                        <li>Historial de compras y tickets de soporte.</li>
+                        <li>Segmentación por comportamiento y valor.</li>
+                    </ul>
+                    <p class="mb-0"><strong>Próximamente:</strong> integraciones CRM (HubSpot) y campañas dirigidas.</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="modalVentas" tabindex="-1" aria-labelledby="modalVentasLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalVentasLabel"><i class="bi bi-currency-dollar"></i> Ventas</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+                </div>
+                <div class="modal-body">
+                    <p class="mb-2">Registra ventas al instante, genera comprobantes y analiza KPIs en tiempo real.</p>
+                    <ul>
+                        <li>Facturación con impuestos y descuentos.</li>
+                        <li>Comprobantes PDF y envío por correo.</li>
+                        <li>Métricas de ingresos, margen y top productos.</li>
+                    </ul>
+                    <p class="mb-0"><strong>Próximamente:</strong> pagos electrónicos e integración contable.</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="modalSeguridad" tabindex="-1" aria-labelledby="modalSeguridadLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalSeguridadLabel"><i class="bi bi-shield-lock"></i> Seguridad</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+                </div>
+                <div class="modal-body">
+                    <p class="mb-2">Autenticación con roles, backups automáticos y cifrado en tránsito y reposo.</p>
+                    <ul>
+                        <li>Control de acceso basado en roles (RBAC).</li>
+                        <li>Respaldos programados y restauración.</li>
+                        <li>Monitoreo básico de actividad.</li>
+                    </ul>
+                    <p class="mb-0"><strong>Próximamente:</strong> auditoría avanzada y 2FA.</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                </div>
             </div>
         </div>
     </div>
 </section>
 
-<section id="contact" class="my-5">
-    <h2 class="font-subtitle">Contacto</h2>
-    <p>Para soporte, contáctanos en soporte@factureo.local</p>
+<section id="noticias" class="my-5 section-full" data-reveal="fade-up" data-reveal-stagger="120"
+    data-reveal-children="fade-up">
+    <h2 class="font-subtitle mb-4">Noticias</h2>
+    <div class="row g-4">
+        <div class="col-md-4">
+            <div class="card h-100 hover-card">
+                <div class="card-body">
+                    <span class="badge bg-secondary mb-2">Actualización</span>
+                    <h5 class="card-title mb-1">Nuevo panel de métricas</h5>
+                    <small class="text-muted">Oct 2025</small>
+                    <p class="card-text mt-2 mb-0">Introducimos KPIs en tiempo real para ventas e inventario.</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card h-100 hover-card">
+                <div class="card-body">
+                    <span class="badge bg-info mb-2">Integraciones</span>
+                    <h5 class="card-title mb-1">Próxima API pública</h5>
+                    <small class="text-muted">Oct 2025</small>
+                    <p class="card-text mt-2 mb-0">Estamos preparando endpoints REST para integrarte con facilidad.</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card h-100 hover-card">
+                <div class="card-body">
+                    <span class="badge bg-success mb-2">Clientes</span>
+                    <h5 class="card-title mb-1">100+ negocios activos</h5>
+                    <small class="text-muted">Sep 2025</small>
+                    <p class="card-text mt-2 mb-0">Gracias por confiar en nosotros para gestionar su operación.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section id="contacto" class="my-5 section-full" data-reveal="fade-up">
+    <h2 class="font-subtitle mb-4">Contáctenos</h2>
+    <div class="row g-4">
+        <div class="col-md-5">
+            <div class="card h-100 hover-card">
+                <div class="card-body">
+                    <h5 class="card-title mb-3"><i class="bi bi-headset"></i> Soporte</h5>
+                    <p class="mb-2">¿Necesitas ayuda? Escríbenos y te responderemos pronto.</p>
+                    <a class="btn btn-primary" href="mailto:soporte@factureo.local"><i class="bi bi-envelope-fill"></i>
+                        Enviar correo</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-7">
+            <div class="accordion" id="faq">
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="faq1">
+                        <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#faqc1"
+                            aria-expanded="true" aria-controls="faqc1">
+                            ¿Cómo empiezo a usar Factureo?
+                        </button>
+                    </h2>
+                    <div id="faqc1" class="accordion-collapse collapse show" aria-labelledby="faq1"
+                        data-bs-parent="#faq">
+                        <div class="accordion-body">Crea una cuenta, configura tu inventario inicial y registra tus
+                            primeros clientes. ¡Listo!</div>
+                    </div>
+                </div>
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="faq2">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                            data-bs-target="#faqc2" aria-expanded="false" aria-controls="faqc2">
+                            ¿Cómo migro mis datos actuales?
+                        </button>
+                    </h2>
+                    <div id="faqc2" class="accordion-collapse collapse" aria-labelledby="faq2" data-bs-parent="#faq">
+                        <div class="accordion-body">Pronto habilitaremos importación CSV. Mientras tanto, podemos
+                            asistirte con una carga inicial.</div>
+                    </div>
+                </div>
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="faq3">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                            data-bs-target="#faqc3" aria-expanded="false" aria-controls="faqc3">
+                            ¿Ofrecen soporte 24/7?
+                        </button>
+                    </h2>
+                    <div id="faqc3" class="accordion-collapse collapse" aria-labelledby="faq3" data-bs-parent="#faq">
+                        <div class="accordion-body">Sí, contamos con soporte 24/7 para planes empresariales.</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </section>
 {% endblock %}
