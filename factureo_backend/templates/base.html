@@ -53,6 +53,7 @@
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Pacifico&display=swap');
         @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Zen+Dots&display=swap');
         /* Fuentes para "Trusted by" (logotipos tipográficos) */
         @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap');
         @import url('https://fonts.googleapis.com/css2?family=Lora:wght@700&display=swap');
@@ -172,6 +173,7 @@
     {% if request.endpoint in ['index'] %}
     <script defer src="{{ url_for('static', filename='js/pages/index-counters.js') }}"></script>
     <script defer src="{{ url_for('static', filename='js/pages/index-floating-menu.js') }}"></script>
+    <script defer src="{{ url_for('static', filename='js/pages/nosotros-subnav.js') }}"></script>
     {% endif %}
 </body>
 

@@ -28,6 +28,22 @@
 
 <section id="nosotros" class="my-5 section-full" data-reveal="fade-up">
     <h2 class="font-subtitle mb-4 section-title">Nosotros</h2>
+    <!-- Submenú interno de la sección Nosotros -->
+    <nav class="nosotros-subnav mb-4" aria-label="Submenú de Nosotros">
+        <ul class="nav nav-pills flex-nowrap overflow-auto">
+            <li class="nav-item"><a class="nav-link active" href="#nos-resumen">Resumen</a></li>
+            <li class="nav-item"><a class="nav-link" href="#nos-historia">Historia</a></li>
+            <li class="nav-item"><a class="nav-link" href="#nos-mvv">Misión, visión y valores</a></li>
+            <li class="nav-item"><a class="nav-link" href="#nos-equipo">Equipo</a></li>
+            <li class="nav-item"><a class="nav-link" href="#nos-logros">Logros</a></li>
+            <li class="nav-item"><a class="nav-link" href="#nos-social">Pruebas sociales</a></li>
+            <li class="nav-item"><a class="nav-link" href="#nos-visuales">Elementos visuales</a></li>
+            <li class="nav-item"><a class="nav-link" href="#nos-cta">Llamada a la acción</a></li>
+            <li class="nav-item"><a class="nav-link" href="#nos-ubicacion">Ubicación</a></li>
+            <li class="nav-item"><a class="nav-link" href="#nos-estrategia">Estrategia futura</a></li>
+        </ul>
+    </nav>
+    <div id="nos-resumen" class="ns-section" data-reveal="fade-up">
     <div class="row g-4 align-items-center">
         <div class="col-md-6">
             <p class="mb-3">Impulsamos a las PyMEs a tomar decisiones informadas con una plataforma ágil y segura
@@ -44,6 +60,7 @@
             </a>
         </div>
         <div class="col-md-6">
+            <img src="{{ url_for('static', filename='img/nosotros_transparent.svg') }}" alt="Ilustración de Factureo" class="img-fluid nosotros-illus mb-3" loading="lazy" data-reveal="fade-up">
             <div class="row g-3">
                 <div class="col-6">
                     <div class="card text-center hover-card stat-card">
@@ -95,6 +112,230 @@
             <li class="brand brand-factureox" aria-label="Factureox" data-reveal-child>Factureox</li>
             <li class="brand brand-consesars" aria-label="Consesars" data-reveal-child>Consesars</li>
             <li class="brand brand-masons" aria-label="Masons" data-reveal-child>Masons</li>
+        </ul>
+    </div>
+
+    </div> <!-- /ns-section resumen -->
+
+    <!-- Historia de la marca -->
+    <div id="nos-historia" class="ns-section mt-5" data-reveal="fade-up">
+        <h3 class="h4 mb-3 ns-title"><i class="bi bi-journal-text me-2"></i>Historia de la marca</h3>
+        <div class="row g-4">
+            <div class="col-lg-8">
+                <ol class="timeline list-unstyled m-0">
+                    <li>
+                        <div class="tl-dot"></div>
+                        <div class="tl-content">
+                            <div class="tl-year">2023</div>
+                            <p class="mb-0">Nace la idea de simplificar la gestión integral para PyMEs: inventario, clientes y ventas unificados.</p>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="tl-dot"></div>
+                        <div class="tl-content">
+                            <div class="tl-year">2024</div>
+                            <p class="mb-0">MVP con énfasis en rendimiento y seguridad. Primeros clientes piloto y aprendizaje acelerado.</p>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="tl-dot"></div>
+                        <div class="tl-content">
+                            <div class="tl-year">2025</div>
+                            <p class="mb-0">Lanzamiento de paneles en tiempo real y arquitectura lista para escalar regionalmente.</p>
+                        </div>
+                    </li>
+                </ol>
+            </div>
+            <div class="col-lg-4">
+                <div class="card bg-transparent border-0">
+                    <div class="card-body p-3 p-lg-4">
+                        <div class="d-flex align-items-center mb-2"><i class="bi bi-bullseye me-2"></i><strong>Propósito</strong></div>
+                        <p class="text-muted mb-2">Dar a cada PyME herramientas claras para decidir y crecer sin fricción.</p>
+                        <div class="d-flex align-items-center mb-2"><i class="bi bi-lightning me-2"></i><strong>Diferencial</strong></div>
+                        <p class="text-muted mb-0">Velocidad, usabilidad y datos confiables por diseño.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Misión, visión y valores -->
+    <div id="nos-mvv" class="ns-section mt-5" data-reveal="fade-up">
+        <h3 class="h4 mb-3 ns-title"><i class="bi bi-compass me-2"></i>Misión, visión y valores</h3>
+        <div class="row g-4">
+            <div class="col-md-4">
+                <div class="card h-100 hover-card">
+                    <div class="card-body">
+                        <h5 class="card-title"><i class="bi bi-flag"></i> Misión</h5>
+                        <p class="mb-0">Empoderar a las PyMEs con una plataforma accesible, segura y rápida para gestionar su operación.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card h-100 hover-card">
+                    <div class="card-body">
+                        <h5 class="card-title"><i class="bi bi-eye"></i> Visión</h5>
+                        <p class="mb-0">Ser el estándar de referencia en Latinoamérica para gestión de inventario, clientes y ventas.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card h-100 hover-card">
+                    <div class="card-body">
+                        <h5 class="card-title"><i class="bi bi-heart"></i> Valores</h5>
+                        <div class="d-flex flex-wrap gap-2">
+                            <span class="badge rounded-pill bg-primary-subtle text-primary">Transparencia</span>
+                            <span class="badge rounded-pill bg-primary-subtle text-primary">Simplicidad</span>
+                            <span class="badge rounded-pill bg-primary-subtle text-primary">Seguridad</span>
+                            <span class="badge rounded-pill bg-primary-subtle text-primary">Aprendizaje</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- El equipo -->
+    <div id="nos-equipo" class="ns-section mt-5" data-reveal="fade-up">
+        <h3 class="h4 mb-3 ns-title"><i class="bi bi-people me-2"></i>El equipo</h3>
+        <div class="row g-4">
+            <div class="col-12 col-md-6 col-lg-4">
+                <div class="card team-card h-100 text-center">
+                    <div class="card-body">
+                        <div class="avatar mx-auto mb-2"><i class="bi bi-person-circle"></i></div>
+                        <h6 class="mb-0">Andrés Forero</h6>
+                        <small class="text-muted">CEO & Estrategia</small>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-md-6 col-lg-4">
+                <div class="card team-card h-100 text-center">
+                    <div class="card-body">
+                        <div class="avatar mx-auto mb-2"><i class="bi bi-person-circle"></i></div>
+                        <h6 class="mb-0">Edwin Cadena</h6>
+                        <small class="text-muted">CTO & Producto</small>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-md-6 col-lg-4">
+                <div class="card team-card h-100 text-center">
+                    <div class="card-body">
+                        <div class="avatar mx-auto mb-2"><i class="bi bi-person-circle"></i></div>
+                        <h6 class="mb-0">Evelyn Lopez</h6>
+                        <small class="text-muted">Client Success</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Logros y reconocimientos -->
+    <div id="nos-logros" class="ns-section mt-5" data-reveal="fade-up">
+        <h3 class="h4 mb-3 ns-title"><i class="bi bi-trophy me-2"></i>Logros y reconocimientos</h3>
+        <ul class="list-group list-group-flush bg-transparent">
+            <li class="list-group-item bg-transparent d-flex align-items-center">
+                <i class="bi bi-award me-2 text-warning"></i> Finalistas en Programa Aceleración PyME 2025
+            </li>
+            <li class="list-group-item bg-transparent d-flex align-items-center">
+                <i class="bi bi-graph-up-arrow me-2 text-success"></i> 99.9% de disponibilidad sostenida en los últimos 6 meses
+            </li>
+            <li class="list-group-item bg-transparent d-flex align-items-center">
+                <i class="bi bi-shield-lock me-2 text-primary"></i> Auditoría de seguridad interna completada Q3 2025
+            </li>
+        </ul>
+    </div>
+
+    <!-- Pruebas sociales -->
+    <div id="nos-social" class="ns-section mt-5" data-reveal="fade-up">
+        <h3 class="h4 mb-3 ns-title"><i class="bi bi-chat-quote me-2"></i>Pruebas sociales</h3>
+        <div class="row g-4">
+            <div class="col-md-6">
+                <div class="card h-100">
+                    <div class="card-body">
+                        <blockquote class="blockquote mb-0">
+                            <p class="mb-2">“Pasamos de hojas de cálculo a paneles claros en días. Factureo nos ahorra horas a la semana.”</p>
+                            <footer class="blockquote-footer">Mariana R., Retail</footer>
+                        </blockquote>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="card h-100">
+                    <div class="card-body">
+                        <blockquote class="blockquote mb-0">
+                            <p class="mb-2">“La rapidez y la simpleza marcan la diferencia. Nuestro equipo lo adoptó sin fricción.”</p>
+                            <footer class="blockquote-footer">Julián P., Distribución</footer>
+                        </blockquote>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Elementos visuales -->
+    <div id="nos-visuales" class="ns-section mt-5" data-reveal="fade-up">
+        <h3 class="h4 mb-3 ns-title"><i class="bi bi-palette me-2"></i>Elementos visuales</h3>
+        <div class="row g-4 align-items-stretch">
+            <div class="col-lg-6">
+                <div class="card h-100">
+                    <div class="card-body">
+                        <h6 class="text-muted">Paleta</h6>
+                        <div class="swatches d-flex flex-wrap gap-2">
+                            <span class="swatch sw-ap" title="accent-primary"></span>
+                            <span class="swatch sw-astrong" title="accent-strong"></span>
+                            <span class="swatch sw-aweak" title="accent-weak"></span>
+                            <span class="swatch sw-c2" title="color-2"></span>
+                            <span class="swatch sw-c6" title="color-6"></span>
+                            <span class="swatch sw-c10" title="color-10"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="card h-100">
+                    <div class="card-body">
+                        <h6 class="text-muted">Tipografía</h6>
+                        <p class="mb-2 font-mont">Montserrat — pesos 400/500/600/700</p>
+                        <p class="mb-0 font-paci">Pacifico — acento para marca</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Llamada a la acción -->
+    <div id="nos-cta" class="ns-section mt-5" data-reveal="fade-up">
+        <div class="card bg-gradient-cta text-center p-4 p-md-5">
+            <h3 class="h4 mb-3"><i class="bi bi-rocket-takeoff me-2"></i>¿Listo para empezar?</h3>
+            <p class="mb-3">Crea tu cuenta y gestiona inventario, clientes y ventas en minutos.</p>
+            <a class="btn btn-primary btn-lg" href="{{ url_for('auth.register') }}"><i class="bi bi-person-plus"></i> Crear cuenta</a>
+        </div>
+    </div>
+
+    <!-- Ubicación -->
+    <div id="nos-ubicacion" class="ns-section mt-5" data-reveal="fade-up">
+        <h3 class="h4 mb-3 ns-title"><i class="bi bi-geo-alt me-2"></i>Ubicación</h3>
+        <div class="card">
+            <div class="card-body">
+                <div class="d-flex align-items-center gap-3 flex-wrap">
+                    <i class="bi bi-building"></i>
+                    <div>
+                        <div><strong>Oficina</strong></div>
+                        <div class="text-muted">Operación remota con presencia en Colombia</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Estrategia futura -->
+    <div id="nos-estrategia" class="ns-section mt-5" data-reveal="fade-up">
+        <h3 class="h4 mb-3 ns-title"><i class="bi bi-signpost-split me-2"></i>Estrategia futura</h3>
+        <ul class="list-unstyled m-0 roadmap">
+            <li><i class="bi bi-check2-circle text-success me-2"></i> Paneles en tiempo real y métricas operativas</li>
+            <li><i class="bi bi-check2-circle text-success me-2"></i> Mejoras de seguridad y observabilidad</li>
+            <li><i class="bi bi-dot me-2"></i> Integraciones: pagos electrónicos y CRM</li>
+            <li><i class="bi bi-dot me-2"></i> API pública y ecosistema de partners</li>
         </ul>
     </div>
 
