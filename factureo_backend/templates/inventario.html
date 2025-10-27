@@ -4,10 +4,12 @@
 <h3>Inventario</h3>
 <div class="d-flex justify-content-end mb-2">
     <div class="btn-group" role="group" aria-label="Cambiar vista">
-        <button class="btn btn-outline-light btn-sm" id="btnVistaTarjetas" onclick="document.getElementById('vista-tarjetas').classList.remove('d-none');document.getElementById('vista-tabla').classList.add('d-none');">Tarjetas</button>
-        <button class="btn btn-outline-light btn-sm" id="btnVistaTabla" onclick="document.getElementById('vista-tabla').classList.remove('d-none');document.getElementById('vista-tarjetas').classList.add('d-none');">Tabla</button>
+        <button class="btn btn-outline-light btn-sm" id="btnVistaTarjetas"
+            onclick="document.getElementById('vista-tarjetas').classList.remove('d-none');document.getElementById('vista-tabla').classList.add('d-none');">Tarjetas</button>
+        <button class="btn btn-outline-light btn-sm" id="btnVistaTabla"
+            onclick="document.getElementById('vista-tabla').classList.remove('d-none');document.getElementById('vista-tarjetas').classList.add('d-none');">Tabla</button>
     </div>
-    </div>
+</div>
 <form class="row g-2 mb-3" method="POST" action="{{ url_for('inventario.create_product') }}">
     <div class="col-md-3"><input class="form-control" name="nombre" placeholder="Nombre" title="Nombre del producto"
             required></div>
@@ -54,42 +56,42 @@
 </div>
 
 <div id="vista-tabla">
-<table class="table table-striped align-middle">
-    <thead>
-        <tr>
-            <th>Nombre</th>
-            <th>Cantidad</th>
-            <th>Precio</th>
-            <th>Categoría</th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        {% for p in productos %}
-        <tr>
-            <form method="POST" action="{{ url_for('inventario.edit_product', id=p._id) }}" class="row g-2">
-                <td><input class="form-control" name="nombre" value="{{ p.nombre }}" placeholder="Nombre" title="Nombre"
-                        required></td>
-                <td><input type="number" class="form-control" name="cantidad" value="{{ p.cantidad }}"
-                        placeholder="Cantidad" title="Cantidad" min="0" required></td>
-                <td><input type="number" step="0.01" class="form-control" name="precio" value="{{ p.precio }}"
-                        placeholder="Precio" title="Precio" min="0" required></td>
-                <td><input class="form-control" name="categoria" value="{{ p.categoria }}" placeholder="Categoría"
-                        title="Categoría"></td>
-                <td class="text-nowrap">
-                    <button type="submit" class="btn btn-primary btn-sm" title="Guardar cambios"><i
-                            class="bi bi-save"></i> Guardar</button>
-                </td>
-            </form>
-            <td class="text-nowrap">
-                <form method="POST" action="{{ url_for('inventario.delete_product', id=p._id) }}">
-                    <button type="submit" class="btn btn-outline-danger btn-sm" title="Eliminar producto"><i
-                            class="bi bi-trash"></i> Eliminar</button>
+    <table class="table table-striped align-middle">
+        <thead>
+            <tr>
+                <th>Nombre</th>
+                <th>Cantidad</th>
+                <th>Precio</th>
+                <th>Categoría</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for p in productos %}
+            <tr>
+                <form method="POST" action="{{ url_for('inventario.edit_product', id=p._id) }}" class="row g-2">
+                    <td><input class="form-control" name="nombre" value="{{ p.nombre }}" placeholder="Nombre"
+                            title="Nombre" required></td>
+                    <td><input type="number" class="form-control" name="cantidad" value="{{ p.cantidad }}"
+                            placeholder="Cantidad" title="Cantidad" min="0" required></td>
+                    <td><input type="number" step="0.01" class="form-control" name="precio" value="{{ p.precio }}"
+                            placeholder="Precio" title="Precio" min="0" required></td>
+                    <td><input class="form-control" name="categoria" value="{{ p.categoria }}" placeholder="Categoría"
+                            title="Categoría"></td>
+                    <td class="text-nowrap">
+                        <button type="submit" class="btn btn-primary btn-sm" title="Guardar cambios"><i
+                                class="bi bi-save"></i> Guardar</button>
+                    </td>
                 </form>
-            </td>
-        </tr>
-        {% endfor %}
-    </tbody>
-</table>
+                <td class="text-nowrap">
+                    <form method="POST" action="{{ url_for('inventario.delete_product', id=p._id) }}">
+                        <button type="submit" class="btn btn-outline-danger btn-sm" title="Eliminar producto"><i
+                                class="bi bi-trash"></i> Eliminar</button>
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
 </div>
 {% endblock %}

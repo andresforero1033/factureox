@@ -4,13 +4,14 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content="Factureo: gestiona inventario, clientes y ventas con una plataforma ágil y segura para PyMEs." />
+    <meta name="description"
+        content="Factureo: gestiona inventario, clientes y ventas con una plataforma ágil y segura para PyMEs." />
     <!-- Performance: preconnect para Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <!-- Inicializar tema lo antes posible para evitar parpadeos -->
     <script>
-        (function() {
+        (function () {
             try {
                 var stored = localStorage.getItem('theme');
                 var prefersLight = window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches;
@@ -61,8 +62,10 @@
     </style>
 </head>
 
-<body data-bs-theme="dark" class="d-flex flex-column min-vh-100 {% if request.endpoint == 'index' %}page-index{% endif %}">
-    <nav class="navbar navbar-expand-lg navbar-dark navbar-floating{% if request.endpoint == 'index' %} navbar-overlay{% endif %}">
+<body data-bs-theme="dark"
+    class="d-flex flex-column min-vh-100 {% if request.endpoint == 'index' %}page-index{% endif %}">
+    <nav
+        class="navbar navbar-expand-lg navbar-dark navbar-floating{% if request.endpoint == 'index' %} navbar-overlay{% endif %}">
         <div class="container">
             <div class="navbar-row d-flex align-items-center w-100">
                 <!-- Logo sin fondo, fuera del menú flotante -->
@@ -72,8 +75,8 @@
                 <div class="nav-shell d-flex align-items-center">
                     <!-- Toggler para móvil -->
                     <button class="navbar-toggler ms-auto" type="button" data-bs-toggle="collapse"
-                        data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
-                        aria-label="Toggle navigation">
+                        data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Toggle navigation">
                         <span class="navbar-toggler-icon"></span>
                     </button>
 
@@ -88,13 +91,17 @@
                         <!-- Acciones en móvil dentro del collapse para accesibilidad -->
                         {% if current_user.is_authenticated %}
                         <ul class="navbar-nav nav-auth d-lg-none ms-lg-3 mt-2 mt-lg-0">
-                            <li class="nav-item"><a class="nav-link" href="{{ url_for('auth.dashboard') }}"><i class="bi bi-speedometer2 me-1"></i> Dashboard</a></li>
-                            <li class="nav-item"><a class="nav-link" href="{{ url_for('auth.logout') }}"><i class="bi bi-box-arrow-right me-1"></i> Cerrar sesión</a></li>
+                            <li class="nav-item"><a class="nav-link" href="{{ url_for('auth.dashboard') }}"><i
+                                        class="bi bi-speedometer2 me-1"></i> Dashboard</a></li>
+                            <li class="nav-item"><a class="nav-link" href="{{ url_for('auth.logout') }}"><i
+                                        class="bi bi-box-arrow-right me-1"></i> Cerrar sesión</a></li>
                         </ul>
                         {% else %}
                         <ul class="navbar-nav nav-auth d-lg-none ms-lg-3 mt-2 mt-lg-0">
-                            <li class="nav-item"><a class="nav-link" href="{{ url_for('auth.login') }}"><i class="bi bi-box-arrow-in-right me-1"></i> Iniciar sesión</a></li>
-                            <li class="nav-item"><a class="nav-link" href="{{ url_for('auth.register') }}"><i class="bi bi-person-plus me-1"></i> Registro</a></li>
+                            <li class="nav-item"><a class="nav-link" href="{{ url_for('auth.login') }}"><i
+                                        class="bi bi-box-arrow-in-right me-1"></i> Iniciar sesión</a></li>
+                            <li class="nav-item"><a class="nav-link" href="{{ url_for('auth.register') }}"><i
+                                        class="bi bi-person-plus me-1"></i> Registro</a></li>
                         </ul>
                         {% endif %}
                     </div>
@@ -103,24 +110,27 @@
                 <!-- Acciones a la derecha en burbuja flotante (solo desktop) -->
                 <div class="nav-actions-shell ms-auto align-items-center">
                     <!-- Toggle de tema oscuro/claro -->
-                    <button type="button" class="nav-icon" id="themeToggle" title="Cambiar tema" aria-label="Cambiar tema">
+                    <button type="button" class="nav-icon" id="themeToggle" title="Cambiar tema"
+                        aria-label="Cambiar tema">
                         <i class="bi bi-moon-stars" data-icon="moon"></i>
                         <i class="bi bi-sun" data-icon="sun" hidden></i>
                     </button>
                     {% if current_user.is_authenticated %}
-                        <a class="nav-icon" href="{{ url_for('auth.dashboard') }}" title="Dashboard" aria-label="Dashboard">
-                            <i class="bi bi-speedometer2"></i>
-                        </a>
-                        <a class="nav-icon" href="{{ url_for('auth.logout') }}" title="Salir" aria-label="Cerrar sesión">
-                            <i class="bi bi-box-arrow-right"></i>
-                        </a>
+                    <a class="nav-icon" href="{{ url_for('auth.dashboard') }}" title="Dashboard" aria-label="Dashboard">
+                        <i class="bi bi-speedometer2"></i>
+                    </a>
+                    <a class="nav-icon" href="{{ url_for('auth.logout') }}" title="Salir" aria-label="Cerrar sesión">
+                        <i class="bi bi-box-arrow-right"></i>
+                    </a>
                     {% else %}
-                        <a class="nav-icon" href="{{ url_for('auth.login') }}" title="Iniciar sesión" aria-label="Iniciar sesión">
-                            <i class="bi bi-box-arrow-in-right"></i>
-                        </a>
-                        <a class="nav-icon" href="{{ url_for('auth.register') }}" title="Crear cuenta" aria-label="Registro">
-                            <i class="bi bi-person-plus"></i>
-                        </a>
+                    <a class="nav-icon" href="{{ url_for('auth.login') }}" title="Iniciar sesión"
+                        aria-label="Iniciar sesión">
+                        <i class="bi bi-box-arrow-in-right"></i>
+                    </a>
+                    <a class="nav-icon" href="{{ url_for('auth.register') }}" title="Crear cuenta"
+                        aria-label="Registro">
+                        <i class="bi bi-person-plus"></i>
+                    </a>
                     {% endif %}
                 </div>
             </div>
@@ -130,12 +140,12 @@
     <main class="container-fluid py-4 flex-grow-1">
         {% with messages = get_flashed_messages(with_categories=true) %}
         {% if messages %}
-            {% for category, message in messages %}
-            <div class="alert alert-{{ category }} alert-dismissible fade show" role="alert">
-                {{ message }}
-                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-            </div>
-            {% endfor %}
+        {% for category, message in messages %}
+        <div class="alert alert-{{ category }} alert-dismissible fade show" role="alert">
+            {{ message }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+        {% endfor %}
         {% endif %}
         {% endwith %}
 
@@ -146,9 +156,12 @@
         <div class="container d-flex justify-content-between align-items-center">
             <span>© {{ 2025 }} Factureo. Todos los derechos reservados.</span>
             <span>
-                <a href="https://github.com/andresforero1033/factureox" class="text-decoration-none" target="_blank" rel="noopener" aria-label="GitHub"><i class="bi bi-github mx-1"></i></a>
-                <a href="https://www.linkedin.com/in/" class="text-decoration-none" target="_blank" rel="noopener" aria-label="LinkedIn"><i class="bi bi-linkedin mx-1"></i></a>
-                <a href="mailto:soporte@factureo.local" class="text-decoration-none" aria-label="Email"><i class="bi bi-envelope-fill mx-1"></i></a>
+                <a href="https://github.com/andresforero1033/factureox" class="text-decoration-none" target="_blank"
+                    rel="noopener" aria-label="GitHub"><i class="bi bi-github mx-1"></i></a>
+                <a href="https://www.linkedin.com/in/" class="text-decoration-none" target="_blank" rel="noopener"
+                    aria-label="LinkedIn"><i class="bi bi-linkedin mx-1"></i></a>
+                <a href="mailto:soporte@factureo.local" class="text-decoration-none" aria-label="Email"><i
+                        class="bi bi-envelope-fill mx-1"></i></a>
             </span>
         </div>
     </footer>
