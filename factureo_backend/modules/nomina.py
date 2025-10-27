@@ -115,6 +115,31 @@ def empleados_edit(id):
     return render_template('nomina_empleados_form.html', emp=emp)
 
 
+@nomina_bp.route('/empleados/eliminar/<id>', methods=['POST'])
+@login_required
+def empleados_delete(id):
+    empleados = collection('empleados')
+    try:
+        emp_id = ObjectId(id)
+    except Exception:
+        flash('Identificador inválido.', 'danger')
+        return redirect(url_for('nomina.empleados_list'))
+    emp = empleados.find_one({'_id': emp_id})
+    if not emp:
+        flash('Empleado no encontrado.', 'warning')
+        return redirect(url_for('nomina.empleados_list'))
+    cascade = (request.form.get('cascade') == '1')
+    runs_count = collection('nomina').count_documents({'empleado_id': emp_id})
+    if runs_count and not cascade:
+        flash('No se puede eliminar: el empleado tiene liquidaciones asociadas. Usa "Eliminar todo" si deseas borrar también sus liquidaciones.', 'warning')
+        return redirect(url_for('nomina.empleados_list'))
+    if cascade and runs_count:
+        collection('nomina').delete_many({'empleado_id': emp_id})
+    empleados.delete_one({'_id': emp_id})
+    flash('Empleado eliminado correctamente.' + (' (con liquidaciones)' if cascade else ''), 'success')
+    return redirect(url_for('nomina.empleados_list'))
+
+
 @nomina_bp.route('/generar', methods=['GET','POST'])
 @login_required
 def generar():
