@@ -1,6 +1,33 @@
 # Factureo
 
-Aplicación web de gestión empresarial con Flask + MongoDB Atlas + Bootstrap 5.
+Plataforma ligera para gestionar inventario, clientes y ventas.
+
+![Estado](https://img.shields.io/badge/status-active-success)
+![Python](https://img.shields.io/badge/python-3.10%2B-blue)
+![Flask](https://img.shields.io/badge/flask-2.x-000000?logo=flask&logoColor=white)
+![MongoDB](https://img.shields.io/badge/MongoDB-Atlas-47A248?logo=mongodb&logoColor=white)
+![Bootstrap](https://img.shields.io/badge/Bootstrap-5-7952B3?logo=bootstrap&logoColor=white)
+
+## Acerca de
+Factureo es una aplicación web pensada para PyMEs que necesitan controlar su inventario, clientes y ventas de forma simple. Construida con Flask, MongoDB Atlas y Bootstrap 5, prioriza un flujo de trabajo claro, un diseño limpio y componentes reutilizables.
+
+Características clave:
+- Autenticación: registro, login, logout y recuperación de contraseña.
+- Módulos principales: Inventario, Clientes y Ventas.
+- Dashboard con accesos rápidos y métricas.
+- Noticias (listado, detalle, alta/edición con imagen por URL).
+- Perfil de usuario: edición de datos, cambio de contraseña y avatar.
+- Páginas legales (Términos y Privacidad) y footer enriquecido.
+
+Tecnologías:
+- Backend: Flask 2.x, Python 3.10+, Jinja2.
+- Base de datos: MongoDB Atlas.
+- Frontend: Bootstrap 5, Bootstrap Icons y CSS modular.
+- Tests: PyTest; Linter: Ruff.
+
+Vista previa:
+
+<img src="factureo_backend/static/img/factureo.jpeg" alt="Factureo - captura" width="600" />
 
 ## Módulos
 - Autenticación (registro, login, logout)
@@ -93,3 +120,7 @@ Se incluye un workflow en `.github/workflows/ci.yml` que:
 - Si la app intenta conectar a `localhost:27017`, revisa que `.env` esté correcto y que `config.py` cargue `.env` (ya incluido).
 - Si ves `Authentication failed`, revisa usuario/clave de Atlas y tu IP en Network Access.
 - Si cambiaste la contraseña en Atlas, actualiza el `.env`.
+
+---
+
+¿Quieres contribuir? Abre un issue o PR. Si te resulta útil, considera darle una estrella al repo.
