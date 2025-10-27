@@ -44,3 +44,36 @@
         padding: 1.25rem 1.25rem;
     }
 }
+
+/* Hover suave para tarjetas (sombra ligera, sin zoom) */
+.hover-soft {
+    transition: transform 0.12s ease, box-shadow 0.12s ease;
+}
+.hover-soft:hover {
+    transform: translateY(-1px);
+    box-shadow: var(--shadow-1);
+    border-color: rgba(var(--accent-rgb), .35);
+}
+
+/* Indicador caret sutil en tarjetas clicables */
+.hover-soft .card-caret {
+    position: absolute;
+    top: .5rem;
+    right: .5rem;
+    color: var(--color-2);
+    opacity: 0;
+    transform: translateX(-2px);
+    transition: opacity .15s ease, transform .15s ease;
+    pointer-events: none;
+}
+.hover-soft:hover .card-caret {
+    opacity: .85;
+    transform: translateX(0);
+}
+
+/* Utilidades locales para dashboard */
+.minw-280 { min-width: 280px; }
+.avatar-42 { width: 42px; height: 42px; }
+.avatar-64 { width: 64px; height: 64px; }
+.bg-soft { background: rgba(255,255,255,.08); }
+[data-theme="light"] .bg-soft { background: rgba(0,0,0,.06); }

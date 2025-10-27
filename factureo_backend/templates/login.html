@@ -2,26 +2,35 @@
 {% block title %}Login - Factureo{% endblock %}
 {% block content %}
 <div class="row justify-content-center">
-    <div class="col-md-6">
+    <div class="col-md-6 col-lg-5 col-xl-4">
         <div class="card shadow-sm">
             <div class="card-body">
-                <h3 class="mb-4 text-center">Iniciar sesión</h3>
-                <form method="POST">
+                <h3 class="mb-1 text-center">Iniciar sesión</h3>
+                <p class="text-center text-muted mb-4">Accede con tu correo o usa Google/Microsoft</p>
+                <form method="POST" novalidate id="loginForm">
                     <div class="mb-3">
                         <label for="email" class="form-label">Correo</label>
                         <input id="email" type="email" class="form-control" name="email"
                             placeholder="correo@ejemplo.com" autocomplete="username" required>
+                        <div class="invalid-feedback">Ingresa un correo válido.</div>
                     </div>
-                    <div class="mb-3">
+                    <div class="mb-2">
                         <label for="password" class="form-label">Contraseña</label>
                         <input id="password" type="password" class="form-control" name="password" placeholder="••••••••"
-                            autocomplete="current-password" required>
+                            autocomplete="current-password" minlength="6" required>
+                        <div class="invalid-feedback">La contraseña debe tener al menos 6 caracteres.</div>
                     </div>
-                    <div class="d-grid gap-2">
+                    <div class="d-flex justify-content-end mb-3">
+                        <a href="{{ url_for('auth.forgot_password') }}" class="small">¿Olvidaste tu contraseña?</a>
+                    </div>
+                    <div class="d-grid gap-2 mb-3">
                         <button type="submit" class="btn btn-primary"><i class="bi bi-box-arrow-in-right"></i>
                             Entrar</button>
-                        <a href="#" class="btn btn-outline-danger" disabled><i class="bi bi-google"></i> Google</a>
-                        <a href="#" class="btn btn-outline-dark" disabled><i class="bi bi-microsoft"></i> Microsoft</a>
+                    </div>
+                    <div class="text-center text-muted mb-2"><small>o continúa con</small></div>
+                    <div class="d-grid gap-2">
+                        <a href="{{ url_for('auth.login_google') }}" class="btn btn-outline-danger"><i class="bi bi-google"></i> Google</a>
+                        <a href="{{ url_for('auth.login_microsoft') }}" class="btn btn-outline-dark"><i class="bi bi-microsoft"></i> Microsoft</a>
                     </div>
                 </form>
                 <div class="mt-3 text-center">

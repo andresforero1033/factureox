@@ -17,5 +17,12 @@ class Config:
     SESSION_COOKIE_NAME = os.getenv("SESSION_COOKIE_NAME", "factureo_session")
     MONGO_URI = _get_mongo_uri()
     DEBUG = os.getenv("FLASK_DEBUG", "1") == "1"
+    # OAuth (configurar por variables de entorno)
+    GOOGLE_CLIENT_ID = os.getenv("GOOGLE_CLIENT_ID")
+    GOOGLE_CLIENT_SECRET = os.getenv("GOOGLE_CLIENT_SECRET")
+    MICROSOFT_CLIENT_ID = os.getenv("MICROSOFT_CLIENT_ID")
+    MICROSOFT_CLIENT_SECRET = os.getenv("MICROSOFT_CLIENT_SECRET")
+    # Multi-tenant (common) por defecto
+    MS_TENANT = os.getenv("MS_TENANT", "common")
 
 config = Config()

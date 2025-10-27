@@ -72,7 +72,8 @@
                 <!-- Logo sin fondo, fuera del menú flotante -->
                 <a class="navbar-brand brand-logo" href="/">Factureo</a>
 
-                <!-- Menú central flotante -->
+                {% if request.endpoint == 'index' %}
+                <!-- Menú central flotante (solo en inicio) -->
                 <div class="nav-shell d-flex align-items-center">
                     <!-- Toggler para móvil -->
                     <button class="navbar-toggler ms-auto" type="button" data-bs-toggle="collapse"
@@ -89,26 +90,12 @@
                             <li class="nav-item"><a class="nav-link" href="#noticias">Noticias</a></li>
                             <li class="nav-item"><a class="nav-link" href="#contacto">Contáctenos</a></li>
                         </ul>
-                        <!-- Acciones en móvil dentro del collapse para accesibilidad -->
-                        {% if current_user.is_authenticated %}
-                        <ul class="navbar-nav nav-auth d-lg-none ms-lg-3 mt-2 mt-lg-0">
-                            <li class="nav-item"><a class="nav-link" href="{{ url_for('auth.dashboard') }}"><i
-                                        class="bi bi-speedometer2 me-1"></i> Dashboard</a></li>
-                            <li class="nav-item"><a class="nav-link" href="{{ url_for('auth.logout') }}"><i
-                                        class="bi bi-box-arrow-right me-1"></i> Cerrar sesión</a></li>
-                        </ul>
-                        {% else %}
-                        <ul class="navbar-nav nav-auth d-lg-none ms-lg-3 mt-2 mt-lg-0">
-                            <li class="nav-item"><a class="nav-link" href="{{ url_for('auth.login') }}"><i
-                                        class="bi bi-box-arrow-in-right me-1"></i> Iniciar sesión</a></li>
-                            <li class="nav-item"><a class="nav-link" href="{{ url_for('auth.register') }}"><i
-                                        class="bi bi-person-plus me-1"></i> Registro</a></li>
-                        </ul>
-                        {% endif %}
                     </div>
                 </div>
+                {% endif %}
 
-                <!-- Acciones a la derecha en burbuja flotante (solo desktop) -->
+                <!-- Acciones a la derecha en burbuja flotante (solo index) -->
+                {% if request.endpoint == 'index' %}
                 <div class="nav-actions-shell ms-auto align-items-center">
                     <!-- Toggle de tema oscuro/claro -->
                     <button type="button" class="nav-icon" id="themeToggle" title="Cambiar tema"
@@ -134,11 +121,15 @@
                     </a>
                     {% endif %}
                 </div>
+                {% endif %}
             </div>
         </div>
     </nav>
 
     <main class="container-fluid py-4 flex-grow-1">
+        {# Renderizar mensajes flash globales en todas las páginas excepto en index,
+           donde los mostraremos localmente dentro de la sección de Contacto para mejor UX #}
+        {% if request.endpoint != 'index' %}
         {% with messages = get_flashed_messages(with_categories=true) %}
         {% if messages %}
         {% for category, message in messages %}
@@ -149,31 +140,97 @@
         {% endfor %}
         {% endif %}
         {% endwith %}
+        {% endif %}
 
         {% block content %}{% endblock %}
     </main>
 
-    <footer class="py-4 mt-auto border-top">
-        <div class="container d-flex justify-content-between align-items-center">
-            <span>© {{ 2025 }} Factureo. Todos los derechos reservados.</span>
-            <span>
-                <a href="https://github.com/andresforero1033/factureox" class="text-decoration-none" target="_blank"
-                    rel="noopener" aria-label="GitHub"><i class="bi bi-github mx-1"></i></a>
-                <a href="https://www.linkedin.com/in/" class="text-decoration-none" target="_blank" rel="noopener"
-                    aria-label="LinkedIn"><i class="bi bi-linkedin mx-1"></i></a>
-                <a href="mailto:soporte@factureo.local" class="text-decoration-none" aria-label="Email"><i
-                        class="bi bi-envelope-fill mx-1"></i></a>
-            </span>
+    {% if request.endpoint == 'index' %}
+    <footer class="pt-5 mt-auto border-top">
+        <div class="container">
+            <div class="row g-4">
+                <!-- Información de la empresa -->
+                <div class="col-12 col-lg-4">
+                    <div class="d-flex align-items-center gap-2 mb-2">
+                        <span class="fs-5 fw-semibold">Factureo</span>
+                    </div>
+                    <p class="text-muted mb-3">Plataforma ágil y segura para gestionar inventario, clientes y ventas. Diseñada para PyMEs que quieren decidir con datos.</p>
+                    <div class="d-flex gap-2">
+                        <a class="btn btn-outline-light btn-sm" href="https://facebook.com" target="_blank" rel="noopener" aria-label="Facebook"><i class="bi bi-facebook"></i></a>
+                        <a class="btn btn-outline-light btn-sm" href="https://instagram.com" target="_blank" rel="noopener" aria-label="Instagram"><i class="bi bi-instagram"></i></a>
+                        <a class="btn btn-outline-light btn-sm" href="https://www.linkedin.com/in/" target="_blank" rel="noopener" aria-label="LinkedIn"><i class="bi bi-linkedin"></i></a>
+                        <a class="btn btn-outline-light btn-sm" href="https://github.com/andresforero1033/factureox" target="_blank" rel="noopener" aria-label="GitHub"><i class="bi bi-github"></i></a>
+                    </div>
+                </div>
+
+                <!-- Enlaces rápidos -->
+                <div class="col-6 col-lg-2">
+                    <h6 class="mb-3">Enlaces</h6>
+                    <ul class="list-unstyled m-0">
+                        <li class="mb-2"><a class="text-decoration-none" href="/">Inicio</a></li>
+                        <li class="mb-2"><a class="text-decoration-none" href="{{ url_for('inventario.list_products') }}">Inventario</a></li>
+                        <li class="mb-2"><a class="text-decoration-none" href="{{ url_for('clientes.list_clients') }}">Clientes</a></li>
+                        <li class="mb-2"><a class="text-decoration-none" href="{{ url_for('ventas.list_sales') }}">Ventas</a></li>
+                        <li class="mb-2"><a class="text-decoration-none" href="/#noticias">Noticias</a></li>
+                        <li class="mb-2"><a class="text-decoration-none" href="/#contacto">Contáctenos</a></li>
+                    </ul>
+                </div>
+
+                <!-- Soporte -->
+                <div class="col-6 col-lg-3">
+                    <h6 class="mb-3">Soporte</h6>
+                    <ul class="list-unstyled m-0">
+                        <li class="mb-2"><a class="text-decoration-none" href="{{ url_for('pages.terms') }}" role="link">Términos y condiciones</a></li>
+                        <li class="mb-2"><a class="text-decoration-none" href="{{ url_for('pages.privacy') }}" role="link">Política de privacidad</a></li>
+                        <li class="mb-2"><a class="text-decoration-none" href="mailto:soporte@factureo.local">Ayuda técnica</a></li>
+                    </ul>
+                </div>
+
+                <!-- Suscripción (opcional) -->
+                <div class="col-12 col-lg-3">
+                    <h6 class="mb-3">Suscríbete</h6>
+                    <p class="text-muted small mb-2">Recibe novedades y consejos en tu correo.</p>
+                    <form class="needs-validation" novalidate>
+                        <div class="input-group">
+                            <input type="email" class="form-control" placeholder="tu@correo.com" aria-label="Correo electrónico" required>
+                            <button class="btn btn-primary" type="button" disabled>Próximamente</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <hr class="my-4">
+            <div class="d-flex flex-column flex-md-row justify-content-between align-items-center pb-4 gap-2">
+                <small class="text-muted">© <span id="currentYear">2025</span> Factureo. Todos los derechos reservados.</small>
+                <small class="text-muted">Hecho con <i class="bi bi-heart-fill" aria-hidden="true"></i> para PyMEs.</small>
+            </div>
         </div>
     </footer>
+    {% endif %}
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <script defer src="{{ url_for('static', filename='js/components/theme-toggle.js') }}"></script>
     <script defer src="{{ url_for('static', filename='js/components/reveal.js') }}"></script>
+    {% if request.endpoint == 'auth.login' %}
+    <script defer src="{{ url_for('static', filename='js/pages/login.js') }}"></script>
+    {% endif %}
+    {% if request.endpoint == 'auth.register' %}
+    <script defer src="{{ url_for('static', filename='js/pages/register.js') }}"></script>
+    {% endif %}
+    {% if request.endpoint == 'contact.contact' %}
+    <script defer src="{{ url_for('static', filename='js/pages/contact.js') }}"></script>
+    {% endif %}
     {% if request.endpoint in ['index'] %}
     <script defer src="{{ url_for('static', filename='js/pages/index-counters.js') }}"></script>
     <script defer src="{{ url_for('static', filename='js/pages/index-floating-menu.js') }}"></script>
     <script defer src="{{ url_for('static', filename='js/pages/nosotros-subnav.js') }}"></script>
+    <script defer src="{{ url_for('static', filename='js/pages/contact.js') }}"></script>
+    <script>
+        (function(){
+            var el = document.getElementById('currentYear');
+            if (el) { el.textContent = new Date().getFullYear(); }
+        })();
+    </script>
     {% endif %}
 </body>
 

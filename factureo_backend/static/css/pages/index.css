@@ -395,3 +395,17 @@
 
 /* Roadmap bullets */
 #nosotros .roadmap li { margin: .35rem 0; }
+
+/* --------- Noticias (feed en index) --------- */
+#noticias .news-card { overflow: hidden; border: 1px solid rgba(255,255,255,.08); }
+[data-theme="light"] #noticias .news-card { border-color: rgba(0,0,0,.08); }
+#noticias .news-card .news-cover img { width: 100%; height: 100%; object-fit: cover; }
+#noticias .news-card .placeholder-cover { background: linear-gradient(135deg, rgba(var(--accent-rgb), .15), rgba(0,0,0,.15)); }
+[data-theme="light"] #noticias .news-card .placeholder-cover { background: linear-gradient(135deg, rgba(var(--accent-rgb), .12), rgba(0,0,0,.05)); }
+#noticias .news-card .cover-placeholder { font-size: 2rem; color: var(--color-2); opacity: .65; }
+#noticias .news-card .card-title { color: var(--color-1); }
+#noticias .news-card .card-text { color: var(--color-6); }
+
+@media (min-width: 992px) {
+    #noticias .news-card .card-body { padding: 1.25rem 1.25rem; }
+}
