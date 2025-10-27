@@ -54,6 +54,16 @@
         <button class="btn btn-primary" type="submit">Guardar</button>
       </div>
     </form>
+    {% if emp %}
+    <hr>
+    <div class="d-flex justify-content-between align-items-center">
+      <div class="text-muted small">Zona peligrosa</div>
+      <form method="post" action="{{ url_for('nomina.empleados_delete', id=emp._id) }}" onsubmit="return confirm('¿Eliminar definitivamente al empleado {{ emp.name }} y TODAS sus liquidaciones asociadas? Esta acción es irreversible.');">
+        <input type="hidden" name="cascade" value="1">
+        <button type="submit" class="btn btn-outline-danger"><i class="bi bi-trash3"></i> Eliminar empleado y todas sus liquidaciones</button>
+      </form>
+    </div>
+    {% endif %}
   </div>
 </div>
 {% endblock %}
