@@ -192,7 +192,8 @@
 }
 
 /* Alineación solo para tarjetas en la sección Servicios */
-#servicios .col-md-6.col-lg-3 {
+#servicios .col-md-6.col-lg-3,
+#servicios .col-sm-6.col-lg-4 {
     display: flex;
 }
 
@@ -311,6 +312,23 @@
         min-width: 72%;
     }
 }
+
+/* --------- Servicios: encabezado, tarjetas y precios --------- */
+#servicios .services-subtitle { color: var(--color-6); }
+#servicios .services-intro { color: var(--color-2); }
+
+#servicios .service-card .card-title i { color: var(--accent-primary); margin-right: .35rem; }
+#servicios .service-card p { color: var(--color-2); }
+
+/* Pricing */
+#servicios .pricing .plan-card { border: 1px solid rgba(255,255,255,.08); }
+[data-theme="light"] #servicios .pricing .plan-card { border-color: rgba(0,0,0,.08); }
+#servicios .pricing .plan-card.best { box-shadow: 0 0 0 2px rgba(var(--accent-rgb), .35), var(--shadow-1); }
+#servicios .pricing .price { color: var(--color-2); }
+
+/* CTA reutilizable en Servicios */
+#servicios .bg-gradient-cta { background: linear-gradient(135deg, rgba(var(--accent-rgb), .22), rgba(0,0,0,.18)); border: 1px solid rgba(255,255,255,.08); border-radius: var(--radius-lg); }
+[data-theme="light"] #servicios .bg-gradient-cta { background: linear-gradient(135deg, rgba(var(--accent-rgb), .15), rgba(0,0,0,.04)); border-color: rgba(0,0,0,.07); }
 
 /* --------- Submenú interno Nosotros --------- */
 #nosotros .nosotros-subnav {
