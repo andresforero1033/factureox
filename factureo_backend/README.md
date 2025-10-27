@@ -52,6 +52,52 @@ $env:FLASK_APP="app.py"; $env:FLASK_ENV="development"; python app.py
 
 App por defecto en http://127.0.0.1:5000/
 
+## Configuración de correo (SMTP)
+
+Para enviar comprobantes de nómina por correo, configura estas variables en `factureo_backend/.env`:
+
+- MAIL_SERVER: servidor SMTP (ej. smtp.gmail.com, smtp.office365.com)
+- MAIL_PORT: puerto (587 con TLS en la mayoría de casos)
+- MAIL_USE_TLS: 1 si usa TLS al iniciar (STARTTLS), 0 en caso contrario
+- MAIL_USERNAME: usuario de autenticación (si aplica)
+- MAIL_PASSWORD: contraseña o App Password (Gmail/Office)
+- MAIL_SENDER: dirección remitente (si no se define, usa MAIL_USERNAME)
+
+Ejemplos rápidos:
+
+Gmail (requiere 2FA + App Password):
+
+```env
+MAIL_SERVER=smtp.gmail.com
+MAIL_PORT=587
+MAIL_USE_TLS=1
+MAIL_USERNAME=tu_usuario@gmail.com
+MAIL_PASSWORD=tu_app_password
+MAIL_SENDER=tu_usuario@gmail.com
+```
+
+Office 365:
+
+```env
+MAIL_SERVER=smtp.office365.com
+MAIL_PORT=587
+MAIL_USE_TLS=1
+MAIL_USERNAME=tu_usuario@tu_dominio.com
+MAIL_PASSWORD=tu_contraseña_o_app_password
+MAIL_SENDER=tu_usuario@tu_dominio.com
+```
+
+Desarrollo local con smtp4dev (no envía correos reales):
+
+```env
+MAIL_SERVER=localhost
+MAIL_PORT=25
+MAIL_USE_TLS=0
+MAIL_SENDER=factureo@localhost
+```
+
+Luego, en el comprobante de nómina, usa “Enviar por correo”. Si falta configuración o hay un problema de conexión/autenticación, verás un mensaje con la causa.
+
 ## Notas sobre MongoDB Atlas
 - Crea un clúster gratuito.
 - Crea un usuario de base de datos y anota usuario/contraseña.

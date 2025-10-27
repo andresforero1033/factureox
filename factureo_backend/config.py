@@ -29,5 +29,12 @@ class Config:
     # Valores por defecto razonables para desarrollo; ajusta en .env
     COL_SMMLV = int(os.getenv("COL_SMMLV", "1300000"))
     COL_AUX_TRANSPORTE = int(os.getenv("COL_AUX_TRANSPORTE", "162000"))
+    # Email (SMTP)
+    MAIL_SERVER = os.getenv("MAIL_SERVER")
+    MAIL_PORT = int(os.getenv("MAIL_PORT", "587"))
+    MAIL_USE_TLS = os.getenv("MAIL_USE_TLS", "1") == "1"
+    MAIL_USERNAME = os.getenv("MAIL_USERNAME")
+    MAIL_PASSWORD = os.getenv("MAIL_PASSWORD")
+    MAIL_SENDER = os.getenv("MAIL_SENDER", os.getenv("MAIL_USERNAME", "factureo@localhost"))
 
 config = Config()

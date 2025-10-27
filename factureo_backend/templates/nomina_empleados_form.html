@@ -21,6 +21,10 @@
         <input type="text" class="form-control" id="position" name="position" value="{{ emp.position if emp else '' }}">
       </div>
       <div class="col-md-6">
+        <label class="form-label" for="email">Correo</label>
+        <input type="email" class="form-control" id="email" name="email" value="{{ emp.email if emp else '' }}" placeholder="empleado@empresa.com">
+      </div>
+      <div class="col-md-6">
         <label class="form-label" for="base_salary">Salario base</label>
         <input type="number" class="form-control" id="base_salary" name="base_salary" value="{{ emp.base_salary if emp else '' }}" min="0" step="1" required>
       </div>

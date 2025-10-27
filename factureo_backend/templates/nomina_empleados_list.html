@@ -18,6 +18,7 @@
             <th>Documento</th>
             <th>Cargo</th>
             <th>Salario base</th>
+            <th>Correo</th>
             <th>Activo</th>
             <th class="text-end">Acciones</th>
           </tr>
@@ -29,6 +30,7 @@
             <td>{{ e.document_id }}</td>
             <td>{{ e.position or '-' }}</td>
             <td>${{ '{:,.0f}'.format(e.base_salary) }}</td>
+            <td>{{ e.email or '-' }}</td>
             <td>
               {% if e.active %}<span class="badge bg-success-subtle text-success">Sí</span>{% else %}<span class="badge bg-secondary-subtle text-secondary">No</span>{% endif %}
             </td>
