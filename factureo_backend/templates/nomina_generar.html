@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+{% block title %}Generar nómina{% endblock %}
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+  <h2 class="mb-0">Generar nómina</h2>
+  <a href="{{ url_for('nomina.home') }}" class="btn btn-outline-secondary"><i class="bi bi-arrow-left"></i> Volver</a>
+</div>
+<div class="card">
+  <div class="card-body">
+    <form method="post" class="row g-3">
+      <div class="col-md-4">
+        <label class="form-label" for="year">Año</label>
+        <input type="number" class="form-control" id="year" name="year" value="{{ default_year or '' }}" required>
+      </div>
+      <div class="col-md-4">
+        <label class="form-label" for="month">Mes</label>
+        <input type="number" class="form-control" id="month" name="month" min="1" max="12" value="{{ default_month or '' }}" required>
+      </div>
+      <div class="col-md-4">
+        <label class="form-label" for="days">Días</label>
+        <input type="number" class="form-control" id="days" name="days" min="1" max="30" value="30">
+      </div>
+      <div class="col-12">
+        <div class="alert alert-secondary">
+          <div class="d-flex align-items-center gap-2"><i class="bi bi-info-circle"></i> <strong>Parámetros actuales</strong></div>
+          <div class="mt-2 small">SMLMV: ${{ '{:,.0f}'.format(conf.SMMLV if conf.SMMLV is defined else conf['SMMLV']) }} — Auxilio transporte: ${{ '{:,.0f}'.format(conf.AUX_TRANSPORTE if conf.AUX_TRANSPORTE is defined else conf['AUX_TRANSPORTE']) }}</div>
+          <div class="small">Puedes ajustar estos valores en variables de entorno: COL_SMMLV, COL_AUX_TRANSPORTE.</div>
+        </div>
+      </div>
+      <div class="col-12 d-flex justify-content-end gap-2">
+        <button class="btn btn-primary" type="submit"><i class="bi bi-calculator"></i> Generar para todos los empleados activos</button>
+      </div>
+    </form>
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+{% block title %}{{ 'Editar' if emp else 'Nuevo' }} empleado - Nómina{% endblock %}
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+  <h2 class="mb-0">{{ 'Editar' if emp else 'Nuevo' }} empleado</h2>
+  <a href="{{ url_for('nomina.empleados_list') }}" class="btn btn-outline-secondary"><i class="bi bi-arrow-left"></i> Volver</a>
+</div>
+<div class="card">
+  <div class="card-body">
+    <form method="post" class="row g-3">
+      <div class="col-md-6">
+        <label class="form-label" for="name">Nombre</label>
+        <input type="text" class="form-control" id="name" name="name" value="{{ emp.name if emp else '' }}" required>
+      </div>
+      <div class="col-md-6">
+        <label class="form-label" for="document_id">Documento</label>
+        <input type="text" class="form-control" id="document_id" name="document_id" value="{{ emp.document_id if emp else '' }}" required>
+      </div>
+      <div class="col-md-6">
+        <label class="form-label" for="position">Cargo</label>
+        <input type="text" class="form-control" id="position" name="position" value="{{ emp.position if emp else '' }}">
+      </div>
+      <div class="col-md-6">
+        <label class="form-label" for="base_salary">Salario base</label>
+        <input type="number" class="form-control" id="base_salary" name="base_salary" value="{{ emp.base_salary if emp else '' }}" min="0" step="1" required>
+      </div>
+      <div class="col-md-6">
+        <label class="form-label" for="contract_type">Tipo de contrato</label>
+        {% set ct = emp.contract_type if emp else 'indefinido' %}
+        <select id="contract_type" name="contract_type" class="form-select">
+          <option value="indefinido" {% if ct=='indefinido' %}selected{% endif %}>Indefinido</option>
+          <option value="fijo" {% if ct=='fijo' %}selected{% endif %}>Fijo</option>
+          <option value="obra" {% if ct=='obra' %}selected{% endif %}>Obra o labor</option>
+        </select>
+      </div>
+      <div class="col-md-6">
+        <label class="form-label" for="start_date">Fecha de inicio</label>
+        <input type="date" class="form-control" id="start_date" name="start_date" value="{{ emp.start_date if emp else '' }}">
+      </div>
+      <div class="col-12">
+        <div class="form-check form-switch">
+          <input class="form-check-input" type="checkbox" id="active" name="active" {% if emp and emp.active %}checked{% endif %} {% if not emp %}checked{% endif %}>
+          <label class="form-check-label" for="active">Activo</label>
+        </div>
+      </div>
+      <div class="col-12">
+        <div class="form-check form-switch">
+          <input class="form-check-input" type="checkbox" id="eligible_transport" name="eligible_transport" {% if emp and emp.eligible_transport %}checked{% endif %}>
+          <label class="form-check-label" for="eligible_transport">Elegible para auxilio de transporte</label>
+        </div>
+      </div>
+      <div class="col-12 d-flex justify-content-end gap-2">
+        <a href="{{ url_for('nomina.empleados_list') }}" class="btn btn-outline-secondary">Cancelar</a>
+        <button class="btn btn-primary" type="submit">Guardar</button>
+      </div>
+    </form>
+  </div>
+</div>
+{% endblock %}

@@ -24,5 +24,10 @@ class Config:
     MICROSOFT_CLIENT_SECRET = os.getenv("MICROSOFT_CLIENT_SECRET")
     # Multi-tenant (common) por defecto
     MS_TENANT = os.getenv("MS_TENANT", "common")
+    # Nómina (Colombia) - configurables por entorno
+    # Salario mínimo mensual legal vigente (SMLMV) y Auxilio de transporte
+    # Valores por defecto razonables para desarrollo; ajusta en .env
+    COL_SMMLV = int(os.getenv("COL_SMMLV", "1300000"))
+    COL_AUX_TRANSPORTE = int(os.getenv("COL_AUX_TRANSPORTE", "162000"))
 
 config = Config()

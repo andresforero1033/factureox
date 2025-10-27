@@ -7,6 +7,7 @@ from modules.inventario import inventario_bp
 from modules.clientes import clientes_bp
 from modules.ventas import ventas_bp
 from modules.noticias import news_bp
+from modules.nomina import nomina_bp
 from modules.pages import pages_bp
 from db import collection
 
@@ -29,6 +30,7 @@ def create_app():
     app.register_blueprint(clientes_bp, url_prefix="/clientes")
     app.register_blueprint(ventas_bp, url_prefix="/ventas")
     app.register_blueprint(news_bp)
+    app.register_blueprint(nomina_bp, url_prefix="/nomina")
     app.register_blueprint(pages_bp)
 
     # OAuth (opcional; solo si hay credenciales)
