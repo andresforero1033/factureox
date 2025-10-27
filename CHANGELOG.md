@@ -1,5 +1,28 @@
 # Changelog
 
+## v0.2.0 (2025-10-27)
+
+Perfil de usuario, mejoras en dashboard y navegación, módulo de noticias y páginas legales.
+
+### Nuevo
+- Perfil de usuario (`/perfil`):
+	- Edición de nombre, usuario, correo, empresa y tema (claro/oscuro).
+	- Cambio de contraseña con verificación de la actual y confirmación.
+	- Subida de avatar (png/jpg/jpeg/gif/webp) con guardado en `static/img/avatars`.
+- Noticias: módulo con listado, detalle y formulario; soporte de `image_url` en alta/edición; plantillas con imagen opcional.
+- Páginas legales: Términos y condiciones y Política de privacidad (blueprint de páginas estáticas).
+- Contacto: plantilla y JS para el formulario.
+
+### Cambios
+- Dashboard: encabezado centrado (“Panel principal de control”) y tarjeta de perfil arriba a la derecha; eliminación del saludo duplicado.
+- Tarjetas de módulos con métricas visibles (productos/clientes/ventas) y hover sutil.
+- Navegación: burbuja flotante y menú central visibles solo en la página de inicio; ocultos en dashboard y módulos internos.
+- CSS: nueva utilidad `avatar-64` y ajustes menores en componentes.
+
+### Notas
+- No se requieren migraciones. Los campos nuevos del usuario (`company`, `avatar_url`, `theme`) se añaden progresivamente al editar el perfil o en registros nuevos.
+- Si no ves cambios de estilo, refresca con limpieza de caché del navegador.
+
 ## v0.1.0 (2025-10-27)
 
 Primera iteración de la interfaz con navegación flotante y microinteracciones.
