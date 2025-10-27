@@ -37,14 +37,9 @@
                 <a class="btn btn-sm btn-outline-light" href="{{ url_for('nomina.empleados_edit', id=e._id) }}" title="Editar empleado" aria-label="Editar {{ e.name }}">
                   <i class="bi bi-pencil"></i>
                 </a>
-                <form method="post" action="{{ url_for('nomina.empleados_delete', id=e._id) }}" class="d-inline" onsubmit="return confirm('¿Eliminar al empleado {{ e.name }}? Esta acción no elimina liquidaciones asociadas.');">
-                  <button type="submit" class="btn btn-sm btn-outline-danger" title="Eliminar empleado" aria-label="Eliminar {{ e.name }}">
-                    <i class="bi bi-trash"></i>
-                  </button>
-                </form>
-                <form method="post" action="{{ url_for('nomina.empleados_delete', id=e._id) }}" class="d-inline" onsubmit="return confirm('¿Eliminar al empleado {{ e.name }} y todas sus liquidaciones? Esta acción es irreversible.');">
+                <form method="post" action="{{ url_for('nomina.empleados_delete', id=e._id) }}" class="d-inline" onsubmit="return confirm('¿Eliminar definitivamente al empleado {{ e.name }} y TODAS sus liquidaciones asociadas? Esta acción es irreversible.');">
                   <input type="hidden" name="cascade" value="1">
-                  <button type="submit" class="btn btn-sm btn-outline-danger" title="Eliminar empleado y liquidaciones" aria-label="Eliminar todo de {{ e.name }}">
+                  <button type="submit" class="btn btn-sm btn-outline-danger" title="Eliminar empleado y todas sus liquidaciones" aria-label="Eliminar todo de {{ e.name }}">
                     <i class="bi bi-trash3"></i>
                   </button>
                 </form>
