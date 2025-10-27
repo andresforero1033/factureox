@@ -1,7 +1,25 @@
 {% extends 'base.html' %}
 {% block title %}Clientes - Factureo{% endblock %}
 {% block content %}
-<h3>Clientes</h3>
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <h3 class="mb-0">Clientes</h3>
+    <form class="row row-cols-lg-auto g-2 align-items-center" method="get" action="{{ url_for('clientes.list_clients') }}" aria-label="Filtros de clientes">
+        <div class="col-12">
+            <input type="text" class="form-control" name="q" value="{{ request.args.get('q','') }}" placeholder="Buscar por nombre, identificación, correo o teléfono" title="Buscar">
+        </div>
+        <div class="col-12">
+            {% set est_sel = request.args.get('estado','') %}
+            <select class="form-select" name="estado" title="Estado">
+                <option value="" {% if not est_sel %}selected{% endif %}>Todos</option>
+                <option value="activo" {% if est_sel=='activo' %}selected{% endif %}>Activo</option>
+                <option value="inactivo" {% if est_sel=='inactivo' %}selected{% endif %}>Inactivo</option>
+            </select>
+        </div>
+        <div class="col-12">
+            <button class="btn btn-outline-light" type="submit"><i class="bi bi-search"></i> Buscar</button>
+        </div>
+    </form>
+</div>
 
 <!-- Botón para modal -->
 <button class="btn btn-success mb-3" data-bs-toggle="modal" data-bs-target="#clienteModal"><i
@@ -11,9 +29,11 @@
     <thead>
         <tr>
             <th>Nombre</th>
+            <th>Identificación</th>
             <th>Correo</th>
             <th>Teléfono</th>
             <th>Dirección</th>
+            <th>Estado</th>
             <th></th>
         </tr>
     </thead>
@@ -23,12 +43,19 @@
             <form method="POST" action="{{ url_for('clientes.edit_client', id=c._id) }}" class="row g-2">
                 <td><input class="form-control" name="nombre" value="{{ c.nombre }}" placeholder="Nombre" title="Nombre"
                         required></td>
+                <td><input class="form-control" name="identificacion" value="{{ c.identificacion or '' }}" placeholder="Identificación" title="Identificación"></td>
                 <td><input class="form-control" name="correo" value="{{ c.correo }}" placeholder="Correo" title="Correo"
                         required></td>
                 <td><input class="form-control" name="telefono" value="{{ c.telefono }}" placeholder="Teléfono"
                         title="Teléfono"></td>
                 <td><input class="form-control" name="direccion" value="{{ c.direccion }}" placeholder="Dirección"
                         title="Dirección"></td>
+                <td>
+                  <select class="form-select" name="estado" title="Estado">
+                    <option value="activo" {% if (c.estado or 'activo')=='activo' %}selected{% endif %}>Activo</option>
+                    <option value="inactivo" {% if c.estado=='inactivo' %}selected{% endif %}>Inactivo</option>
+                  </select>
+                </td>
                 <td class="text-nowrap">
                     <button type="submit" class="btn btn-primary btn-sm" title="Guardar cambios"><i
                             class="bi bi-save"></i> Guardar</button>
@@ -60,6 +87,10 @@
                         <input class="form-control" name="nombre" placeholder="Nombre" required>
                     </div>
                     <div class="mb-3">
+                        <label class="form-label">Identificación</label>
+                        <input class="form-control" name="identificacion" placeholder="CC/NIT/Pasaporte">
+                    </div>
+                    <div class="mb-3">
                         <label class="form-label">Correo</label>
                         <input type="email" class="form-control" name="correo" placeholder="correo@ejemplo.com"
                             required>
@@ -71,6 +102,13 @@
                     <div class="mb-3">
                         <label class="form-label">Dirección</label>
                         <input class="form-control" name="direccion" placeholder="Dirección">
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Estado</label>
+                        <select class="form-select" name="estado">
+                            <option value="activo" selected>Activo</option>
+                            <option value="inactivo">Inactivo</option>
+                        </select>
                     </div>
                 </div>
                 <div class="modal-footer">

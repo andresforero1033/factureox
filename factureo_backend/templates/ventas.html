@@ -1,45 +1,234 @@
 {% extends 'base.html' %}
 {% block title %}Ventas - Factureo{% endblock %}
 {% block content %}
-<h3>Ventas</h3>
-<form class="row g-2 mb-3" method="POST" action="{{ url_for('ventas.create_sale') }}">
-    <div class="col-md-4">
-        <select class="form-select" name="cliente_id" required title="Cliente">
-            <option value="">Seleccione cliente</option>
-            {% for c in clientes %}
-            <option value="{{ c._id }}">{{ c.nombre }}</option>
-            {% endfor %}
-        </select>
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <h3 class="mb-0">Ventas</h3>
+        <form class="row row-cols-lg-auto g-2 align-items-center" method="get" action="{{ url_for('ventas.list_sales') }}" aria-label="Filtros de ventas">
+        <div class="col-12">
+            <input type="date" class="form-control" name="desde" value="{{ request.args.get('desde','') }}" placeholder="Desde">
+        </div>
+        <div class="col-12">
+            <input type="date" class="form-control" name="hasta" value="{{ request.args.get('hasta','') }}" placeholder="Hasta">
+        </div>
+        <div class="col-12">
+            <select name="cliente" class="form-select" title="Filtrar por cliente">
+                <option value="">Todos los clientes</option>
+                {% for c in clientes %}
+                <option value="{{ c._id }}" {% if request.args.get('cliente')==c._id|string %}selected{% endif %}>{{ c.nombre }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="col-12">
+            <select name="estado" class="form-select" title="Filtrar por estado">
+                {% set estado_sel = request.args.get('estado','') %}
+                <option value="" {% if not estado_sel %}selected{% endif %}>Todos</option>
+                <option value="completada" {% if estado_sel=='completada' %}selected{% endif %}>Completada</option>
+                <option value="anulada" {% if estado_sel=='anulada' %}selected{% endif %}>Anulada</option>
+            </select>
+        </div>
+        <div class="col-12">
+            <button class="btn btn-outline-light" type="submit"><i class="bi bi-funnel"></i> Filtrar</button>
+        </div>
+    </form>
+</div>
+
+<form id="ventaForm" class="border rounded p-3 mb-4" method="POST" action="{{ url_for('ventas.create_sale') }}">
+    <div class="row g-2 align-items-end">
+        <div class="col-md-4">
+            <label class="form-label">Cliente</label>
+            <select class="form-select" name="cliente_id" required title="Cliente">
+                <option value="">Seleccione cliente</option>
+                {% for c in clientes %}
+                <option value="{{ c._id }}">{{ c.nombre }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="col-md-4">
+            <label class="form-label">Producto</label>
+            <select class="form-select" id="productoSelect" title="Producto">
+                <option value="">Seleccione producto</option>
+                {% for p in productos %}
+                <option value="{{ p._id }}" data-precio="{{ (p.precio_venta or p.precio or 0)|float }}">{{ p.nombre }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="col-md-2">
+            <label class="form-label">Cantidad</label>
+            <input type="number" min="1" value="1" class="form-control" id="cantidadInput" title="Cantidad" placeholder="Cantidad">
+        </div>
+        <div class="col-md-2 d-grid">
+            <button type="button" id="agregarBtn" class="btn btn-outline-primary"><i class="bi bi-plus"></i> Agregar</button>
+        </div>
     </div>
-    <div class="col-md-6">
-        <select class="form-select" name="productos_ids" multiple size="4" required title="Productos">
-            {% for p in productos %}
-            <option value="{{ p._id }}">{{ p.nombre }} - {{ p.precio }}</option>
-            {% endfor %}
-        </select>
+
+    <div class="table-responsive mt-3">
+        <table class="table table-sm align-middle">
+            <thead>
+                <tr>
+                    <th>Producto</th>
+                    <th class="text-end">Cantidad</th>
+                    <th class="text-end">Precio</th>
+                    <th class="text-end">Subtotal</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody id="itemsTable"></tbody>
+            <tfoot>
+                <tr>
+                    <td colspan="3" class="text-end">Subtotal</td>
+                    <td class="text-end" id="subtotalCell">$0.00</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td colspan="2"></td>
+                    <td class="text-end">
+                        <div class="input-group input-group-sm">
+                            <span class="input-group-text">Desc. %</span>
+                              <input type="number" step="0.01" min="0" max="100" class="form-control" name="descuento_pct" id="descuentoInput" value="0" title="Porcentaje de descuento" placeholder="0">
+                        </div>
+                    </td>
+                    <td class="text-end" id="descuentoCell">-$0.00</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td colspan="2"></td>
+                    <td class="text-end">
+                        <div class="input-group input-group-sm">
+                            <span class="input-group-text">Impuesto %</span>
+                              <input type="number" step="0.01" min="0" max="100" class="form-control" name="impuesto_pct" id="impuestoInput" value="0" title="Porcentaje de impuesto" placeholder="0">
+                        </div>
+                    </td>
+                    <td class="text-end" id="impuestoCell">$0.00</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td colspan="3" class="text-end fw-bold">Total</td>
+                    <td class="text-end fw-bold" id="totalCell">$0.00</td>
+                    <td></td>
+                </tr>
+            </tfoot>
+        </table>
     </div>
-    <div class="col-md-2 d-grid">
-        <button type="submit" class="btn btn-success"><i class="bi bi-cart-check"></i> Registrar</button>
+
+    <input type="hidden" name="items_json" id="itemsJson">
+    <div class="d-flex justify-content-end">
+        <button type="submit" class="btn btn-success"><i class="bi bi-cart-check"></i> Registrar venta</button>
     </div>
 </form>
 
-<h5>Ventas recientes</h5>
-<table class="table table-striped">
-    <thead>
-        <tr>
-            <th>Fecha</th>
-            <th>Cliente</th>
-            <th>Total</th>
-        </tr>
-    </thead>
-    <tbody>
-        {% for v in ventas %}
-        <tr>
-            <td>{{ v.fecha }}</td>
-            <td>{{ v.cliente_id }}</td>
-            <td>{{ v.total }}</td>
-        </tr>
-        {% endfor %}
-    </tbody>
-</table>
+<h5>Historial</h5>
+<div class="table-responsive">
+    <table class="table table-striped align-middle">
+        <thead>
+            <tr>
+                <th>Fecha</th>
+                <th>Cliente</th>
+                <th class="text-end">Subtotal</th>
+                <th class="text-end">Descuento</th>
+                <th class="text-end">Impuesto</th>
+                <th class="text-end">Total</th>
+                <th>Estado</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for v in ventas %}
+            <tr>
+                <td>{{ v.fecha }}</td>
+                <td>{{ v.cliente_nombre }}</td>
+                <td class="text-end">${{ '%.2f'|format((v.subtotal or 0)|float) }}</td>
+                <td class="text-end">${{ '%.2f'|format((v.descuento_total or 0)|float) }}</td>
+                <td class="text-end">${{ '%.2f'|format((v.impuesto_total or 0)|float) }}</td>
+                <td class="text-end">${{ '%.2f'|format((v.total or 0)|float) }}</td>
+                <td>
+                    {% if v.estado=='completada' %}
+                    <span class="badge bg-success-subtle text-success">Completada</span>
+                    {% elif v.estado=='anulada' %}
+                    <span class="badge bg-secondary-subtle text-secondary">Anulada</span>
+                    {% else %}
+                    <span class="badge bg-light text-muted">{{ v.estado or '—' }}</span>
+                    {% endif %}
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+<script>
+    const fmt = n => new Intl.NumberFormat('es-CO', { style: 'currency', currency: 'COP', minimumFractionDigits: 2 }).format(n);
+    const items = [];
+    const itemsTable = document.getElementById('itemsTable');
+    const subtotalCell = document.getElementById('subtotalCell');
+    const descuentoCell = document.getElementById('descuentoCell');
+    const impuestoCell = document.getElementById('impuestoCell');
+    const totalCell = document.getElementById('totalCell');
+    const descuentoInput = document.getElementById('descuentoInput');
+    const impuestoInput = document.getElementById('impuestoInput');
+    const itemsJson = document.getElementById('itemsJson');
+
+    function recalc() {
+        let subtotal = items.reduce((acc, it) => acc + (it.precio * it.cantidad), 0);
+        const descPct = parseFloat(descuentoInput.value || '0')/100.0;
+        const impPct = parseFloat(impuestoInput.value || '0')/100.0;
+        const descuento = Math.round((subtotal * descPct) * 100) / 100;
+        const base = subtotal - descuento;
+        const impuesto = Math.round((base * impPct) * 100) / 100;
+        const total = Math.round((base + impuesto) * 100) / 100;
+        subtotalCell.textContent = fmt(subtotal);
+        descuentoCell.textContent = '-' + fmt(descuento);
+        impuestoCell.textContent = fmt(impuesto);
+        totalCell.textContent = fmt(total);
+        itemsJson.value = JSON.stringify(items.map(it => ({ producto_id: it.id, cantidad: it.cantidad })));
+    }
+
+    function render() {
+        itemsTable.innerHTML = '';
+        items.forEach((it, idx) => {
+            const tr = document.createElement('tr');
+            tr.innerHTML = `
+                <td>${it.nombre}</td>
+                <td class="text-end">
+                    <input type="number" min="1" class="form-control form-control-sm text-end" value="${it.cantidad}" data-idx="${idx}">
+                </td>
+                <td class="text-end">${fmt(it.precio)}</td>
+                <td class="text-end">${fmt(it.precio * it.cantidad)}</td>
+                <td class="text-end">
+                    <button type="button" class="btn btn-sm btn-outline-danger" data-del="${idx}"><i class="bi bi-x"></i></button>
+                </td>`;
+            itemsTable.appendChild(tr);
+        });
+        recalc();
+    }
+
+    document.getElementById('agregarBtn').addEventListener('click', () => {
+        const sel = document.getElementById('productoSelect');
+        const id = sel.value;
+        if (!id) return;
+        const nombre = sel.options[sel.selectedIndex].textContent;
+        const precio = parseFloat(sel.options[sel.selectedIndex].dataset.precio || '0');
+        const qty = parseInt(document.getElementById('cantidadInput').value || '1');
+        if (!qty || qty <= 0) return;
+        const existing = items.find(it => it.id === id);
+        if (existing) existing.cantidad += qty; else items.push({ id, nombre, precio, cantidad: qty });
+        render();
+    });
+
+    itemsTable.addEventListener('input', (e) => {
+        const idx = e.target.getAttribute('data-idx');
+        if (idx !== null) {
+            const v = parseInt(e.target.value || '1');
+            items[idx].cantidad = Math.max(1, v);
+            render();
+        }
+    });
+    itemsTable.addEventListener('click', (e) => {
+        const idx = e.target.getAttribute('data-del') || e.target.closest('button')?.getAttribute('data-del');
+        if (idx !== null && idx !== undefined) {
+            items.splice(parseInt(idx), 1);
+            render();
+        }
+    });
+    descuentoInput.addEventListener('input', recalc);
+    impuestoInput.addEventListener('input', recalc);
+</script>
 {% endblock %}
