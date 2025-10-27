@@ -18,6 +18,13 @@
         radial-gradient(1200px 400px at 90% 100%, rgba(104,129,243,0.07), transparent 60%);
 }
 
+/* Encabezados principales de secciones en la landing */
+.section-full > h2, /* Servicios, Noticias, Contacto */
+#nosotros .section-title { /* Nosotros */
+    font-family: 'Zen Dots', system-ui, -apple-system, 'Segoe UI', Roboto, Arial, sans-serif;
+    letter-spacing: .02em;
+}
+
 /* Ilustración SVG en Nosotros */
 #nosotros .nosotros-illus {
     display: block;
@@ -32,6 +39,24 @@
     position: relative;
     display: inline-block;
     padding-bottom: .25rem;
+    font-weight: 700;
+    letter-spacing: .02em;
+    /* Fallback de color */
+    color: var(--color-2);
+    font-size: clamp(2rem, 1.2rem + 2.5vw, 3rem);
+    background-size: 200% 100%;
+    transition: background-position .7s ease, letter-spacing .2s ease, transform .2s ease, color .2s ease;
+}
+
+/* Variantes tipográficas para el título de Nosotros */
+#nosotros .section-title.title-montserrat {
+    font-family: 'Montserrat', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+    letter-spacing: .01em;
+}
+#nosotros .section-title.title-playfair {
+    font-family: 'Playfair Display', Georgia, 'Times New Roman', serif;
+    font-weight: 700;
+    letter-spacing: 0;
 }
 #nosotros .section-title::after {
     content: "";
@@ -39,10 +64,40 @@
     left: 0;
     right: 0;
     bottom: -4px;
-    height: 3px;
+    height: 4px;
     border-radius: 3px;
     background: linear-gradient(90deg, var(--accent-strong), var(--accent-primary), var(--accent-weak));
     opacity: .9;
+    transform: scaleX(.6);
+    transform-origin: left center;
+    transition: transform .35s ease;
+}
+
+/* Gradiente en el texto si el navegador lo soporta */
+@supports (-webkit-background-clip: text) {
+    #nosotros .section-title {
+        background: var(--accent-gradient);
+        -webkit-background-clip: text;
+        background-clip: text;
+        -webkit-text-fill-color: transparent;
+    }
+}
+
+#nosotros .section-title:hover,
+#nosotros .section-title:focus-visible {
+    background-position: 100% 50%;
+    transform: translateY(-1px);
+    letter-spacing: .03em;
+}
+
+#nosotros .section-title:hover::after,
+#nosotros .section-title:focus-visible::after {
+    transform: scaleX(1);
+}
+
+@media (prefers-reduced-motion: reduce) {
+    #nosotros .section-title { transition: none; }
+    #nosotros .section-title::after { transition: none; }
 }
 
 /* Lista con iconos */
@@ -256,3 +311,69 @@
         min-width: 72%;
     }
 }
+
+/* --------- Submenú interno Nosotros --------- */
+#nosotros .nosotros-subnav {
+    position: sticky;
+    top: 72px;
+    z-index: 10;
+    background: rgba(0,0,0,0.2);
+    -webkit-backdrop-filter: saturate(120%) blur(6px);
+    backdrop-filter: saturate(120%) blur(6px);
+    border-radius: var(--radius-pill);
+    padding: .25rem;
+}
+[data-theme="light"] #nosotros .nosotros-subnav { background: rgba(255,255,255,0.5); }
+#nosotros .nosotros-subnav .nav-link {
+    white-space: nowrap;
+    color: var(--color-2);
+    border-radius: var(--radius-pill);
+}
+#nosotros .nosotros-subnav .nav-link.active {
+    color: #fff;
+    background: var(--accent-gradient);
+}
+
+/* Secciones internas (ns-section) */
+#nosotros .ns-section { scroll-margin-top: 88px; }
+#nosotros .ns-title { color: var(--color-2); }
+
+/* Encabezados internos de Nosotros con Zen Dots */
+#nosotros .ns-title,
+#nosotros .ns-section > h3,
+#nosotros .ns-section > h4,
+#nosotros #nos-cta h3 {
+    font-family: 'Zen Dots', system-ui, -apple-system, 'Segoe UI', Roboto, Arial, sans-serif;
+    letter-spacing: .02em;
+}
+
+/* Timeline simple */
+#nosotros .timeline { border-left: 2px solid rgba(255,255,255,.15); padding-left: 1rem; }
+[data-theme="light"] #nosotros .timeline { border-color: rgba(0,0,0,.15); }
+#nosotros .timeline li { position: relative; margin-bottom: .9rem; }
+#nosotros .tl-dot { position: absolute; left: -10px; top: .15rem; width: .65rem; height: .65rem; border-radius: 50%; background: var(--accent-primary); box-shadow: 0 0 0 3px rgba(var(--accent-rgb), .2); }
+#nosotros .tl-year { font-weight: 600; color: var(--color-2); margin-bottom: .25rem; }
+
+/* Equipo */
+#nosotros .team-card .avatar { width: 64px; height: 64px; border-radius: 50%; background: rgba(255,255,255,.08); display: grid; place-items: center; font-size: 1.75rem; color: var(--accent-primary); }
+[data-theme="light"] #nosotros .team-card .avatar { background: rgba(0,0,0,.06); }
+
+/* Swatches de paleta */
+#nosotros .swatches .swatch { width: 36px; height: 36px; border-radius: var(--radius-md); box-shadow: var(--shadow-1); display: inline-block; border: 1px solid rgba(0,0,0,.08); }
+#nosotros .swatch.sw-ap { background: var(--color-4); }
+#nosotros .swatch.sw-astrong { background: var(--accent-strong); }
+#nosotros .swatch.sw-aweak { background: var(--accent-weak); }
+#nosotros .swatch.sw-c2 { background: var(--color-2); }
+#nosotros .swatch.sw-c6 { background: var(--color-6); }
+#nosotros .swatch.sw-c10 { background: var(--color-10); }
+
+/* Tipografía demo */
+#nosotros .font-mont { font-family: 'Montserrat', system-ui; }
+#nosotros .font-paci { font-family: 'Pacifico', cursive; }
+
+/* CTA card */
+#nosotros .bg-gradient-cta { background: linear-gradient(135deg, rgba(var(--accent-rgb), .25), rgba(0,0,0,.2)); border: 1px solid rgba(255,255,255,.08); border-radius: var(--radius-lg); }
+[data-theme="light"] #nosotros .bg-gradient-cta { background: linear-gradient(135deg, rgba(var(--accent-rgb), .2), rgba(0,0,0,.05)); border-color: rgba(0,0,0,.07); }
+
+/* Roadmap bullets */
+#nosotros .roadmap li { margin: .35rem 0; }
